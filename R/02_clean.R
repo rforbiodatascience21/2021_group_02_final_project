@@ -11,13 +11,13 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-my_data <- read_tsv(file = "data/01_my_data.tsv")
+borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 
 # Wrangle data ------------------------------------------------------------
-my_data_clean <- my_data # %>% ...
+borovecki_data_clean <- borovecki_data # %>% ...
 
 
 # Write data --------------------------------------------------------------
-write_tsv(x = my_data_clean,
-          file = "data/02_my_data_clean.tsv")
+write_tsv(x = borovecki_data_clean,
+          file = "data/02_borovecki_data_clean.tsv")
