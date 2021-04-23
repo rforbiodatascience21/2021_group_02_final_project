@@ -11,7 +11,7 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-borovecki_data_clean_aug <- read_tsv(file = "data/03_borovecki_data_clean_aug.tsv.gz")
+borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_clean_aug_all_genes.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
