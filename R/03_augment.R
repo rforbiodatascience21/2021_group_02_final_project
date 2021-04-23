@@ -11,7 +11,7 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-my_data_clean <- read_tsv(file = "data/02_my_data_clean.tsv.gz")
+my_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 
 
 # Wrangle data ------------------------------------------------------------
@@ -23,7 +23,7 @@ my_data_clean <- read_tsv(file = "data/02_my_data_clean.tsv.gz")
 
 # Write data --------------------------------------------------------------
 write_tsv(x = my_data_clean_aug,
-          path = "data/03_my_data_clean_aug.tsv.gz")
+          path = "data/03_borovecki_data_clean_aug.tsv")
 
 borovecki_data_clean_aug_all_genes <- borovecki_data_clean  %>%
   relocate(outcome)
