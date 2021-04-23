@@ -26,5 +26,5 @@ borovecki_data <- mutate(as_tibble(pluck(borovecki,"x")),
 
 
 # Write data --------------------------------------------------------------
-#write_tsv(x = my_data,
-#          file = "data/01_my_data.tsv")
+write_tsv(x = borovecki_data,
+          file = "data/01_borovecki_data.tsv")
