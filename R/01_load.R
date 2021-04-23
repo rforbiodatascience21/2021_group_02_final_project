@@ -13,13 +13,16 @@ source(file = "R/99_project_functions.R")
 
 # Load data ---------------------------------------------------------------
 load("data/raw/borovecki.RData")
-#We add the y matrix as a column in the big matrix (naming the column 'outcome')
-borovecki_data <- mutate(as_tibble(pluck(borovecki,"x")),
-                          outcome=pluck(borovecki,"y"))
+
 
 
 # Wrangle data ------------------------------------------------------------
-#my_data <- my_data_raw # %>% ...
+
+#We create a tibble consisting of the x and add the the y matrix as variable "outcome" 
+
+borovecki_data <- mutate(as_tibble(pluck(borovecki,"x")),
+                         outcome=pluck(borovecki,"y")) %>% relocate(outcome)
+
 
 
 # Write data --------------------------------------------------------------
