@@ -11,16 +11,16 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
-borovecki_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
+my_data_clean <- read_tsv(file = "data/02_my_data_clean.tsv.gz")
 
 
 # Wrangle data ------------------------------------------------------------
-borovecki_data_clean_aug <- borovecki_data_clean  %>%
-  relocate(outcome)
-  
-
+#my_data_clean_aug <- my_data_clean %>%
+#  mutate(outcome = case_when(value == "good" ~ 0,
+#                             value == "poor" ~ 1)) %>%
+#  relocate("outcome")
 
 
 # Write data --------------------------------------------------------------
-write_tsv(x = borovecki_data_clean_aug,
-          path = "data/03_borovecki_data_clean_aug.tsv.gz")
+write_tsv(x = my_data_clean_aug,
+          path = "data/03_my_data_clean_aug.tsv.gz")
