@@ -15,7 +15,8 @@ my_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 
 
 # Wrangle data ------------------------------------------------------------
-#my_data_clean_aug <- my_data_clean %>%
+my_data_clean_aug <- my_data_clean 
+#%>%
 #  mutate(outcome = case_when(value == "good" ~ 0,
 #                             value == "poor" ~ 1)) %>%
 #  relocate("outcome")
