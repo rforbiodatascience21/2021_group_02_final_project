@@ -21,7 +21,7 @@ load("data/raw/borovecki.RData")
 #We create a tibble consisting of the x and add the the y matrix as variable "outcome" 
 
 borovecki_data <- mutate(as_tibble(pluck(borovecki,"x")),
-                         outcome=pluck(borovecki,"y")) %>% relocate(outcome)
+                         outcome=pluck(borovecki,"y")) 
 
 
 
