@@ -24,3 +24,13 @@ my_data_clean <- read_tsv(file = "data/02_my_data_clean.tsv.gz")
 # Write data --------------------------------------------------------------
 write_tsv(x = my_data_clean_aug,
           path = "data/03_my_data_clean_aug.tsv.gz")
+
+borovecki_data_clean_aug_all_genes <- borovecki_data_clean  %>%
+  relocate(outcome)
+  
+borovecki_data_clean_aug_marker_genes <- borovecki_data_clean_aug_all_genes  %>%
+  select("outcome", "201012_at", "202653_s_at", "208374_s_at", "200989_at", "212287_at", 
+         "218589_at", "217816_s_at", "213044_at", 
+         "201071_x_at", "213168_at", "201023_at", "217783_s_at")
+
+
