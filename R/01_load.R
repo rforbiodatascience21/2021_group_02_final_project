@@ -18,7 +18,7 @@ load("data/raw/borovecki.RData")
 
 # Wrangle data ------------------------------------------------------------
 
-#We create a tibble consisting of the x and add the the y matrix as variable "outcome" 
+# Create a tibble consisting of x and add the y matrix as variable "outcome" 
 
 borovecki_data <- mutate(as_tibble(pluck(borovecki,"x")),
                          outcome=pluck(borovecki,"y")) 
