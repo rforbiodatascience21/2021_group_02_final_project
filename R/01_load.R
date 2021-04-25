@@ -11,18 +11,13 @@ library("tidyverse")
 source(file = "R/99_project_functions.R")
 
 
-# Load data ---------------------------------------------------------------
-load("data/raw/borovecki.RData")
+# Load and wrangle data ---------------------------------------------------------------
+#load("data/raw/borovecki.RData")
 
-
-
-# Wrangle data ------------------------------------------------------------
-
-# Create a tibble consisting of x and add the y matrix as variable "outcome" 
-
-borovecki_data <- mutate(as_tibble(pluck(borovecki,"x")),
-                         outcome=pluck(borovecki,"y")) 
-
+# Make tibble where first column is the gene shared between the patients
+borovecki_data <- dir(path = "data/raw", pattern = "*.tsv", full.names = T) %>%
+  map(read_tsv) %>%
+  reduce(inner_join, by = "ID_REF")
 
 
 # Write data --------------------------------------------------------------
