@@ -18,7 +18,8 @@ borovecki_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 
 # Move outcome collumn to the front
 borovecki_data_clean_aug_all_genes <- borovecki_data_clean  %>%
-  relocate(outcome)
+  relocate(outcome) 
+
 
 borovecki_data_clean_aug_marker_genes <- borovecki_data_clean_aug_all_genes  %>%
   select("outcome", "201012_at", "202653_s_at", "208374_s_at", "200989_at", "212287_at", 
