@@ -17,9 +17,13 @@ borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 # Wrangle data ------------------------------------------------------------
 
-# Move outcome column to the front
-borovecki_data_clean <- borovecki_data %>%
-  relocate(outcome)
+# Remove NA values...
+borovecki_data_clean <- borovecki_data # %>%  Remove NA
+
+# Move outcome column to the front - THIS IS DONE IN 3 AUGMENT :)
+# borovecki_data_clean <- borovecki_data  # %>% relocate(outcome)
+
+
 
 # Plot the outcome column
 #outcome_stat <- borovecki_data_clean %>%

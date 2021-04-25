@@ -16,6 +16,7 @@ borovecki_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 
 # Wrangle data ------------------------------------------------------------
 
+# Move outcome collumn to the front
 borovecki_data_clean_aug_all_genes <- borovecki_data_clean  %>%
   relocate(outcome)
 
