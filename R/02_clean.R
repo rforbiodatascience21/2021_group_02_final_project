@@ -19,7 +19,7 @@ borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 # Transpose the tibble, use the first row as column name and create a outcome 
 # column based on the ID_REF column
-borovecki_clean <- as_tibble(cbind(nms = names(borovecki_data), t(borovecki_data))) %>%
+borovecki_data_clean <- as_tibble(cbind(nms = names(borovecki_data), t(borovecki_data))) %>%
   set_names(.[1, ]) %>%
   slice(-1) %>%
   mutate(outcome = case_when(str_detect(ID_REF, "pre_symp") ~ "pre_symptomatic",
