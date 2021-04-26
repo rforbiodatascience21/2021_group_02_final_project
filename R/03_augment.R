@@ -16,11 +16,15 @@ borovecki_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 
 # Wrangle data ------------------------------------------------------------
 
-# Move outcome collumn to the front
-borovecki_data_clean_aug_all_genes <- borovecki_data_clean  %>%
-  relocate(outcome) 
+# Create an outcome column and move it to the front
+borovecki_data_clean_aug_all_genes <- borovecki_data_clean %>%
+  mutate(outcome = case_when(str_detect(ID_REF, "pre_symp") ~ "pre_symptomatic",
+                                                                 str_detect(ID_REF, "control") ~ "control",
+                                                                 str_detect(ID_REF, "symp") ~ "symptomatic")) %>%
+  select(outcome, everything(), -"ID_REF")
 
 
+# Subset the data, only include marker genes
 borovecki_data_clean_aug_marker_genes <- borovecki_data_clean_aug_all_genes  %>%
   select("outcome", "201012_at", "202653_s_at", "208374_s_at", "200989_at", "212287_at", 
          "218589_at", "217816_s_at", "213044_at", 
@@ -31,10 +35,10 @@ borovecki_data_clean_aug_marker_genes <- borovecki_data_clean_aug_all_genes  %>%
 
 # Write data --------------------------------------------------------------
 write_tsv(x = borovecki_data_clean_aug_all_genes,
-          path = "data/03_borovecki_data_clean_aug_all_genes.tsv")
+          file = "data/03_borovecki_data_clean_aug_all_genes.tsv")
 
 write_tsv(x = borovecki_data_clean_aug_marker_genes,
-          path = "data/03_borovecki_data_clean_aug_marker_genes.tsv")
+          file = "data/03_borovecki_data_clean_aug_marker_genes.tsv")
 
   
 

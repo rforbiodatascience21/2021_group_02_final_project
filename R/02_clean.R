@@ -21,11 +21,7 @@ borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 # column based on the ID_REF column
 borovecki_data_clean <- as_tibble(cbind(nms = names(borovecki_data), t(borovecki_data))) %>%
   set_names(.[1, ]) %>%
-  slice(-1) %>%
-  mutate(outcome = case_when(str_detect(ID_REF, "pre_symp") ~ "pre_symptomatic",
-                             str_detect(ID_REF, "control") ~ "control",
-                             str_detect(ID_REF, "symp") ~ "symptomatic")) %>%
-  select(outcome, everything(), -"ID_REF")
+  slice(-1)
 
 # Plot the outcome column
 #outcome_stat <- borovecki_data_clean %>%
