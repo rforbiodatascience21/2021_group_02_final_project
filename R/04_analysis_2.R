@@ -32,7 +32,7 @@ pca_fit %>%
   ggplot(aes(.fittedPC1, .fittedPC2, color = outcome)) + 
   geom_point(size = 1.5) +
   scale_color_manual(
-    values = c(malignant = "#D55E00", benign = "#0072B2")
+    values = c(symptomatic = "#D55E00", pre_symptomatic = "#00FF00", control = "#0072B2")
   ) +
   theme_half_open(12) + background_grid()
 
