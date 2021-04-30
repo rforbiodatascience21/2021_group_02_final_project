@@ -5,7 +5,7 @@ rm(list = ls())
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
 library(patchwork)
-library(ggplo)
+library(ggplot2)
 
 
 # Define functions --------------------------------------------------------
@@ -37,18 +37,22 @@ marker_genes_long <- marker_genes_wide %>%
                names_to = "Genes",
                values_to = "Expression")
 
+# Doing log2 transformation
+marker_genes_long <- marker_genes_long %>% 
+  mutate(Log2 = log2(Expression))
+#fold change?
 
 # Visualise data ----------------------------------------------------------
 
 ggplot(data = marker_genes_long, 
-       mapping = aes(x = Genes, y = Patient, fill = Expression)) + 
+       mapping = aes(x = Genes, y = Patient, fill = Log2)) + 
   geom_tile() +
   theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
-  scale_fill_gradient2(low = "green", high = "red", mid = "white", midpoint = 600)
+  scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 7)
 
-#skal måske køres hvor vi udvælger fra den store tabel? like tager nogle random gener ud? 
-#mest/mindst expressed genes? eller er de bare marker genes?
+#Udvælge random fra den store tabel
 
+#lave så symptomatic og control sættes sammen 
 
 # Write data --------------------------------------------------------------
 #ggsave(file = "") 
