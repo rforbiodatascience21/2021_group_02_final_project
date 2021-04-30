@@ -72,7 +72,7 @@ full_df %>%
        y = "Log2 fold change", 
        title = "Log2 fold change of expression data") +
   scale_colour_manual(name = "Significant level", values = c("grey54", "red", "green")) + 
-  theme(axis.text.x = element_blank()) +
+  theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
   #geom_point(aes(colour = Marker_gene_name))
   #geom_text(aes(label = Marker_gene_name, color = "blue"), size=3.1) 
   geom_text_repel(size = 3.1,  max.overlaps = Inf, color = "black")
