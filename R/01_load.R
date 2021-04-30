@@ -12,7 +12,6 @@ source(file = "R/99_project_functions.R")
 
 
 # Load and wrangle data ---------------------------------------------------------------
-#load("data/raw/borovecki.RData")
 
 # Make tibble where first column is the gene shared between the patients
 borovecki_data <- dir(path = "data/raw", pattern = "*.tsv", full.names = T) %>%
