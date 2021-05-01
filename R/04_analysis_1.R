@@ -78,7 +78,7 @@ full_df %>%
        title = "Log2 fold change of expression data",
        shape = "Marker gene") +
   scale_colour_manual(name = "Significant level", values = c("grey54", 
-                                                             "red", "green")) + 
+                                                             "red", "green3")) + 
   theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
   geom_label_repel(aes(label = Marker_gene_name), nudge_y = -0.2, size = 2.6, 
                    color = "black", min.segment.length = unit(0, 'lines'))
