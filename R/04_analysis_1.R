@@ -30,21 +30,34 @@ df <- borovecki_data_clean_aug_all_genes %>%
   mutate(Log2_foldchange = log2(Patient_sum/Control_sum))  %>%
   mutate(Significant_level = case_when(Log2_foldchange >= 1.8 ~ "Significantly up regulated",
                                        Log2_foldchange <= -1 ~ "Significantly down regulated",
-                                       TRUE ~ "Non-significant")) %>%
-  mutate(Marker_gene = case_when(is.element(Gene, own_marker_genes) ~ "1",
+                                       TRUE ~ "Non-significant")) 
+
+
+# Find the marker genes 
+marker_genes <- df %>%
+    filter(Log2_foldchange > 2.8) %>%
+    pull(Gene) 
+marker_genes
+
+
+# Annotate the marker genes in the large tibble
+df <- df %>%
+  mutate(Marker_gene = case_when(is.element(Gene, marker_genes) ~ "1",
                                  TRUE ~ "0")) %>%
-  mutate(Marker_gene_name = case_when(is.element(Gene, own_marker_genes) ~ Gene,
+  mutate(Marker_gene_name = case_when(is.element(Gene, marker_genes) ~ Gene,
                                       TRUE ~ "")) %>%
   select(Gene, Marker_gene, Marker_gene_name, Patient_sum, Control_sum, Log2_foldchange, Significant_level, everything())
   
 
-marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
+
+their_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
                   "212287_at", "218589_at", "217816_s_at", "213044_at", 
                   "201071_x_at", "213168_at", "201023_at", "217783_s_at")
 
 own_marker_genes <- c("221727_at", "221510_s_at", "219540_at", "219356_s_at",
                       "213941_x_at", "213701_at", "213111_at", "212286_at", 
                       "209649_at", "204286_s_at")
+
 
 
 
