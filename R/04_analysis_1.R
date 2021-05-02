@@ -18,39 +18,15 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 
 # Wrangle data ------------------------------------------------------------
 
-# we should not repeat the summing of the column to the control and symp df, find a way to do it in one step
-control_df <- borovecki_data_clean_aug_all_genes %>%
-  filter(outcome == "control") %>%
-  select(everything(), -outcome) %>%
-  rownames_to_column() %>%
-  pivot_longer(-rowname, names_to = "Gene") %>% 
-  pivot_wider(names_prefix = "Control_", names_from=rowname, values_from=value) %>%
-  rowwise %>% 
-  mutate(Control_sum = sum(c_across(where(is.numeric)))) %>%
-  select(Gene, Control_sum, everything())
-control_df
-
-symp_df <- borovecki_data_clean_aug_all_genes %>%
-  filter(outcome == "symptomatic" | outcome == "pre_symptomatic") %>%
-  select(everything(), -outcome) %>%
-  rownames_to_column() %>%
-  pivot_longer(-rowname, names_to = "Gene") %>% 
-  pivot_wider(names_prefix = "Patient_", names_from=rowname, values_from=value) %>%
-  rowwise %>% 
-  mutate(Patient_sum = sum(c_across(where(is.numeric)))) %>%
-  select(Gene, Patient_sum, everything())
-symp_df
-
-marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
-                  "212287_at", "218589_at", "217816_s_at", "213044_at", 
-                  "201071_x_at", "213168_at", "201023_at", "217783_s_at")
-
-own_marker_genes <- c("221727_at", "221510_s_at", "219540_at", "219356_s_at",
-                      "213941_x_at", "213701_at", "213111_at", "212286_at", 
-                      "209649_at", "204286_s_at")
-
-# Merge the two dataframes and compute the log2 fold change 
-full_df <- full_join(symp_df, control_df, by = "Gene") %>%
+df <- borovecki_data_clean_aug_all_genes %>%
+  mutate(Patient = paste("Patient", rownames(.))) %>% 
+  mutate(Patient = paste(Patient, outcome)) %>% 
+  select(Patient, everything(), -outcome) %>%
+  pivot_longer(cols = -Patient, names_to = "Gene") %>%
+  pivot_wider(names_from = Patient, values_from=value) %>%
+  rowwise %>%
+  mutate(Control_sum = sum(across(matches("control")))) %>%
+  mutate(Patient_sum = sum(across(matches("symp")))) %>%
   mutate(Log2_foldchange = log2(Patient_sum/Control_sum))  %>%
   mutate(Significant_level = case_when(Log2_foldchange >= 1.8 ~ "Significantly up regulated",
                                        Log2_foldchange <= -1 ~ "Significantly down regulated",
@@ -60,12 +36,20 @@ full_df <- full_join(symp_df, control_df, by = "Gene") %>%
   mutate(Marker_gene_name = case_when(is.element(Gene, own_marker_genes) ~ Gene,
                                       TRUE ~ "")) %>%
   select(Gene, Marker_gene, Marker_gene_name, Patient_sum, Control_sum, Log2_foldchange, Significant_level, everything())
+  
 
+marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
+                  "212287_at", "218589_at", "217816_s_at", "213044_at", 
+                  "201071_x_at", "213168_at", "201023_at", "217783_s_at")
+
+own_marker_genes <- c("221727_at", "221510_s_at", "219540_at", "219356_s_at",
+                      "213941_x_at", "213701_at", "213111_at", "212286_at", 
+                      "209649_at", "204286_s_at")
 
 
 
 # Visualize data ----------------------------------------------------------
-full_df %>%  
+df %>%  
   ggplot(mapping = aes(x = Gene, 
                        y = Log2_foldchange,
                        color = Significant_level,
