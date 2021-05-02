@@ -34,6 +34,14 @@ pca_fit <- function(data){
            prcomp())
 }
 
+#Kmeans clustering (Julies)
+kmeans_marker_genes <- kmeans_func(borovecki_data_clean_aug_marker_genes)
+kmeans_all_genes <- kmeans_func(borovecki_data_clean_aug_all_genes)
+
+#PCA fit (Julies)
+pca_fit_marker_genes <- pca_fit(borovecki_data_clean_aug_marker_genes)
+pca_fit_all_genes <- pca_fit(borovecki_data_clean_aug_all_genes)
+
 
 
 # Visualise data ----------------------------------------------------------
@@ -88,14 +96,19 @@ va <- variance_plot(borovecki_data_clean_aug_all_genes) +
 vm + va
   
 
+#KMEANS (Julies)
+#Plot kmeans clustering for marker genes
+kmeans_marker_genes_plot <- kmeans_plot(pca_fit_marker_genes, kmeans_marker_genes) + 
+  ggtitle("Marker genes", subtitle = "K-means clustering")
+
+#Plot kmeans clustering for all genes
+kmeans_all_genes_plot <- kmeans_plot(pca_fit_all_genes, kmeans_all_genes) + 
+  ggtitle("All genes", subtitle = "K-means clustering")
+
+kmeans_plots <- kmeans_marker_genes_plot + 
+                kmeans_all_genes_plot +
+                plot_layout(guides = "collect") #Common legend
 
 
-
-
-
-
-
-
-
-
-
+# Write data --------------------------------------------------------------
+ggsave(file = "Results/kmeans_plots.png", plot = kmeans_plots)
