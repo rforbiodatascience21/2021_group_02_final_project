@@ -29,21 +29,6 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 
 # Wrangle data ------------------------------------------------------------
 
-#KMEANS-------------------
-#Do kmeans on marker genes
-kmeans_marker_genes <- kmeans_func(borovecki_data_clean_aug_marker_genes)
-
-#Do kmeans on all genes
-kmeans_all_genes <- kmeans_func(borovecki_data_clean_aug_all_genes)
-
-# PCA on marker genes
-pca_fit_marker_genes <- pca_fit(borovecki_data_clean_aug_marker_genes)
-
-#PCA on all genes
-pca_fit_all_genes <- pca_fit(borovecki_data_clean_aug_all_genes)
-
-
-
 #RANDOM DATA-----------------
 #Extract 12 random genes 
 set.seed(22)
@@ -59,64 +44,53 @@ random_genes_data <- borovecki_data_clean_aug_all_genes %>%
   select(outcome) %>%
   cbind(random_genes) %>% #Do this with join instead? 
   pivot_longer(cols = -outcome, #Pivot all columns except outcome
-               names_to = "Gene",
-               values_to = "Value") %>%
-  add_column(Type = "Random genes", .before = "outcome") #Add a factor column and place it before the outcome column
+               names_to = "gene",
+               values_to = "expression") %>%
+  add_column(type = "Random genes", .before = "outcome") #Add a factor column and place it before the outcome column
 
 
 #Do the same to the marker gene dataframe and join the two dataframes
-marker_and_random_data <- borovecki_data_clean_aug_marker_genes %>%
+marker_and_random_data_long <- borovecki_data_clean_aug_marker_genes %>%
   pivot_longer(cols = -outcome, #Pivot all columns except outcome
-               names_to = "Gene",
-               values_to = "Value") %>%
-  add_column(Type = "Marker genes", .before = "outcome") %>% #Add a factor column and place it before the outcome column
+               names_to = "gene",
+               values_to = "expression") %>%
+  add_column(type = "Marker genes", .before = "outcome") %>% #Add a factor column and place it before the outcome column
   rbind(random_genes_data)
 
 
 
 # Visualise data ----------------------------------------------------------
 
-
-#KMEANS-------------------
-#Plot kmeans clusters for marker genes
-kmeans_marker_genes_plot <- kmeans_plot(pca_fit_marker_genes, kmeans_marker_genes) + 
-  ggtitle("K-means clustering - Marker genes")
-
-
-#Plot kmeans cluster for all genes
-kmeans_marker_genes_plot <- kmeans_plot(pca_fit_all_genes, kmeans_all_genes) + 
-  ggtitle("K-means clustering - All genes")
-
-
 #BOXPLOT---------------------
-
-
 #Boxplot log2 transformed - marker genes
 log2_marker_genes_boxplot <- log2_boxplot(borovecki_data_clean_aug_marker_genes) +
   ggtitle("Distribution of marker genes expression")
-
 
 #Boxplot log2 transformed - all genes
 log2_all_genes_boxplot <- log2_boxplot(borovecki_data_clean_aug_all_genes) +
   ggtitle("Distribution of all genes expression")
 
+log2_boxplots <- log2_marker_genes_boxplot + log2_all_genes_boxplot
 
-log2_marker_genes_boxplot + log2_all_genes_boxplot
 
 
 #RIDGELINE----------------
-#Ridgplot divided into control and symptomatic
-marker_and_random_data %>%
-  ggplot(mapping = aes(x = Value, y = outcome, fill = stat(x))) +
+#Ridgline for both marker genes and random genes
+ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
+  mutate(expression = log2(expression)) %>% #Log2 transform expression values
+  ggplot(mapping = aes(x = expression, y = outcome, fill = stat(x))) +
   geom_density_ridges_gradient() +
   scale_fill_viridis() +
   theme_ridges() + 
   theme(legend.position = "none", axis.title.y = element_blank()) +
   scale_y_discrete(limit = c("symptomatic", "pre_symptomatic", "control")) +
   labs(x = "Expression (unit??)") +
-  facet_wrap(~ Type)
+  facet_wrap(~ type)
+print(ridgeline_random_comparison_plot)
 
 
 
 # Write data --------------------------------------------------------------
-#ggsave(file = "") #Do we need a results folder?
+ggsave(file = "Results/boxplots.png", plot = log2_boxplots)
+
+ggsave(file = "Results/ridgeline.png", plot = ridgeline_random_comparison_plot) 
