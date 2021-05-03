@@ -19,8 +19,8 @@ borovecki_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 # Create an outcome column and move it to the front
 borovecki_data_clean_aug_all_genes <- borovecki_data_clean %>%
   mutate(outcome = case_when(str_detect(ID_REF, "pre") ~ "pre_symptomatic",
-                                                                 str_detect(ID_REF, "control") ~ "control",
-                                                                 str_detect(ID_REF, "symp") ~ "symptomatic")) %>%
+                             str_detect(ID_REF, "control") ~ "control",
+                             str_detect(ID_REF, "symp") ~ "symptomatic")) %>%
   select(outcome, everything(), -"ID_REF")
 
 
@@ -31,7 +31,19 @@ borovecki_data_clean_aug_marker_genes <- borovecki_data_clean_aug_all_genes  %>%
          "201071_x_at", "213168_at", "201023_at", "217783_s_at")
 
 
+# Make a dataset of 12 random genes 
+set.seed(22)
+random_genes <- borovecki_data_clean_aug_all_genes %>%
+  select(-c(outcome, "201012_at", "202653_s_at", "208374_s_at", "200989_at",
+            "212287_at", "218589_at", "217816_s_at", "213044_at",
+            "201071_x_at", "213168_at", "201023_at", "217783_s_at")) %>% #Remove the 12 marker genes and the outcome column
+  sample(size = 12)
 
+borovecki_data_clean_aug_random_genes <- borovecki_data_clean_aug_all_genes %>%
+  select(outcome) %>%
+  cbind(random_genes) #Append outcome column (Do this with join instead?)
+  
+  
 
 # Write data --------------------------------------------------------------
 write_tsv(x = borovecki_data_clean_aug_all_genes,
@@ -40,7 +52,7 @@ write_tsv(x = borovecki_data_clean_aug_all_genes,
 write_tsv(x = borovecki_data_clean_aug_marker_genes,
           file = "data/03_borovecki_data_clean_aug_marker_genes.tsv")
 
+write_tsv(x = borovecki_data_clean_aug_random_genes,
+          file = "data/03_borovecki_data_clean_aug_random_genes.tsv")
+
   
-
-
-
