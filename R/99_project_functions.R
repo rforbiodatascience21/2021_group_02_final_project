@@ -1,3 +1,16 @@
+#DATA STUFF FUNCTIONS-----------------------------------------------------------
+
+#Pivot longer and log transform values
+long_log2 <- function(data){
+  return(data %>%
+           pivot_longer(cols = -outcome, #Pivot all columns except outcome
+                        names_to = "gene",
+                        values_to = "expression") %>%
+           mutate(expression = log2(expression))) #Log transform expression values
+}
+
+
+
 #MODELLING FUNCTIONS------------------------------------------------------------
 
 #PCA analysis
@@ -24,7 +37,7 @@ kmeans_func <- function(data){
 #Point plot of kmeans clusters with PC1 and PC2 on the axes
 kmeans_plot <- function(pca_fit_data, kmeans_data){
   return(pca_fit_data %>%
-           augment(kmeans_data) %>% #Combine PC coordineates with original data
+           augment(kmeans_data) %>% #Combine PC coordinates with original data
            ggplot(mapping = aes(x = .fittedPC1, y = .fittedPC2, colour = .cluster, shape = outcome)) +
            geom_point(size = 2) +
            scale_colour_viridis(discrete = TRUE) +
@@ -37,19 +50,14 @@ kmeans_plot <- function(pca_fit_data, kmeans_data){
 }
 
 
-#Boxplot of log2 expression
-log2_boxplot <- function(data){
-  return(data %>%
-           pivot_longer(cols = -outcome, #Pivot all columns except outcome
-                        names_to = "gene",
-                        values_to = "expression") %>%
-           mutate(expression = log2(expression)) %>% #Log transform expression values 
+#Boxplot of expression
+boxplot_func <- function(long_data){
+  return(long_data %>%
            ggplot(mapping = aes(x = outcome, 
                                 y = expression, 
                                 fill = outcome)) +
            geom_boxplot(alpha = 0.7) +
            scale_fill_viridis(discrete = TRUE) +
            theme(legend.position = "none") +
-           labs(x = "Outcome", 
-                y = "Log2 expression (Unit??)"))
+           xlab("Outcome"))
 }
