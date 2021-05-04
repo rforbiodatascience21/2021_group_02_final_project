@@ -18,67 +18,44 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 
 # Wrangle data ------------------------------------------------------------
 
+# Transform tibble so each row is one gene and each column is a patient. Compute
+# The mean for each gene stratified on patient/control-status. Compute Log2 fold
+# change and significant level. 
 df <- borovecki_data_clean_aug_all_genes %>%
-  mutate(Patient = paste("Patient", rownames(.))) %>% 
-  mutate(Patient = paste(Patient, outcome)) %>% 
+  mutate(Patient = str_c("Patient_", row_number(), "_", outcome)) %>%
   select(Patient, everything(), -outcome) %>%
   pivot_longer(cols = -Patient, names_to = "Gene") %>%
   pivot_wider(names_from = Patient, values_from=value) %>%
   rowwise %>%
-  mutate(Control_sum = sum(across(matches("control")))) %>%
-  mutate(Patient_sum = sum(across(matches("symp")))) %>%
-  mutate(Log2_foldchange = log2(Patient_sum/Control_sum))  %>%
-  mutate(Significant_level = case_when(Log2_foldchange >= 1.8 ~ "Significantly up regulated",
-                                       Log2_foldchange <= -1 ~ "Significantly down regulated",
-                                       TRUE ~ "Non-significant")) 
+  mutate(Control_mean = rowMeans(across(contains("control")))) %>%
+  mutate(Patient_mean = rowMeans(across(contains("symp")))) %>%
+  mutate(Log2_foldchange = log2(Patient_mean/Control_mean))  %>%
+  mutate(Significant_level = case_when(Log2_foldchange >= 1.8 ~ "Significantly upregulated",
+                                       Log2_foldchange <= -1 ~ "Significantly downregulated",
+                                       TRUE ~ "Non-significant")) %>%
+  select(Gene, Patient_mean, Control_mean, Log2_foldchange, Significant_level, everything())
 
 
-# Find the marker genes 
-marker_genes <- df %>%
-    filter(Log2_foldchange > 2.8) %>%
-    pull(Gene) 
-marker_genes
+# Find the marker genes, using significant level >2.5
+marker_genes <- find_marker_genes(df, 2.4)
 
+# Define the marker genes used in the paper
+paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
+                        "212287_at", "218589_at", "217816_s_at", "213044_at", 
+                        "201071_x_at", "213168_at", "201023_at", "217783_s_at")
 
 # Annotate the marker genes in the large tibble
-df <- df %>%
-  mutate(Marker_gene = case_when(is.element(Gene, marker_genes) ~ "1",
-                                 TRUE ~ "0")) %>%
-  mutate(Marker_gene_name = case_when(is.element(Gene, marker_genes) ~ Gene,
-                                      TRUE ~ "")) %>%
-  select(Gene, Marker_gene, Marker_gene_name, Patient_sum, Control_sum, Log2_foldchange, Significant_level, everything())
-  
-
-
-their_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
-                  "212287_at", "218589_at", "217816_s_at", "213044_at", 
-                  "201071_x_at", "213168_at", "201023_at", "217783_s_at")
-
-own_marker_genes <- c("221727_at", "221510_s_at", "219540_at", "219356_s_at",
-                      "213941_x_at", "213701_at", "213111_at", "212286_at", 
-                      "209649_at", "204286_s_at")
-
+own_marker_genes_tibble <- add_marker_genes_to_tibble(df, marker_genes)
+paper_marker_genes_tibble <- add_marker_genes_to_tibble(df, paper_marker_genes)
 
 
 
 # Visualize data ----------------------------------------------------------
-df %>%  
-  ggplot(mapping = aes(x = Gene, 
-                       y = Log2_foldchange,
-                       color = Significant_level,
-                       shape = Marker_gene)) +
-  geom_point(size = 2) +
-  geom_hline(yintercept = 1.8, color = "blue", size = 1) + 
-  geom_hline(yintercept = -1, color = "blue", size = 1) + 
-  labs(x = "Gene", 
-       y = "Log2 fold change", 
-       title = "Log2 fold change of expression data",
-       shape = "Marker gene") +
-  scale_colour_manual(name = "Significant level", values = c("grey54", 
-                                                             "red", "green3")) + 
-  theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
-  geom_label_repel(aes(label = Marker_gene_name), nudge_y = -0.2, size = 2.6, 
-                   color = "black", min.segment.length = unit(0, 'lines'))
+
+log2_fold_change_plot(own_marker_genes_tibble, "Log2 fold change of expression data - own marker genes")
+log2_fold_change_plot(paper_marker_genes_tibble, "Log2 fold change of expression data - paper marker genes")
+
+
 
 
 # Write data --------------------------------------------------------------
