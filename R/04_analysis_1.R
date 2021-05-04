@@ -52,12 +52,16 @@ paper_marker_genes_tibble <- add_marker_genes_to_tibble(df, paper_marker_genes)
 
 # Visualize data ----------------------------------------------------------
 
-log2_fold_change_plot(own_marker_genes_tibble, "Log2 fold change of expression data - own marker genes")
-log2_fold_change_plot(paper_marker_genes_tibble, "Log2 fold change of expression data - paper marker genes")
+# Visualize using our own selected marker genes
+own_log2_fold_change_plot <- log2_fold_change_plot(own_marker_genes_tibble, 
+                    "Log2 fold change of expression data - own marker genes")
 
+# Visualize using the marker genes from the paper
+paper_log2_fold_change_plot <- log2_fold_change_plot(paper_marker_genes_tibble, 
+                  "Log2 fold change of expression data - paper marker genes")
 
 
 
 # Write data --------------------------------------------------------------
-#write_tsv(...)
-#ggsave(...)
+ggsave(file = "Results/own_log2_fold_change.png", plot = own_log2_fold_change_plot)
+ggsave(file = "Results/paper_log2_fold_change.png", plot = paper_log2_fold_change_plot) 
