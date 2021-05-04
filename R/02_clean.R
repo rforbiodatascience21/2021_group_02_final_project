@@ -16,12 +16,12 @@ borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 # Wrangle data ------------------------------------------------------------
 
-# Transpose the tibble, use the first row as column name and create a outcome 
-# column based on the ID_REF column
-borovecki_data_clean <- as_tibble(cbind(nms = names(borovecki_data), t(borovecki_data))) %>%
-  set_names(.[1, ]) %>%
-  slice(-1)
-
+# Transpose the tibble 
+borovecki_data_clean <- borovecki_data %>%
+  pivot_longer(cols = -ID_REF, names_to = "Patient", values_to = "Values") %>%
+  pivot_wider(id_cols = Patient, names_from = ID_REF, values_from = Values)
+  
+  
 
 # Write data --------------------------------------------------------------
 write_tsv(x = borovecki_data_clean,

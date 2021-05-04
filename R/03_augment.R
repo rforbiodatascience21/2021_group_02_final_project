@@ -18,10 +18,10 @@ borovecki_data_clean <- read_tsv(file = "data/02_borovecki_data_clean.tsv")
 
 # Create an outcome column and move it to the front
 borovecki_data_clean_aug_all_genes <- borovecki_data_clean %>%
-  mutate(outcome = case_when(str_detect(ID_REF, "pre") ~ "pre_symptomatic",
-                             str_detect(ID_REF, "control") ~ "control",
-                             str_detect(ID_REF, "symp") ~ "symptomatic")) %>%
-  select(outcome, everything(), -"ID_REF")
+  mutate(outcome = case_when(str_detect(Patient, "pre") ~ "pre_symptomatic",
+                             str_detect(Patient, "control") ~ "control",
+                             str_detect(Patient, "symp") ~ "symptomatic")) %>%
+  select(outcome, everything(), -"Patient")
 
 
 # Subset the data, only include marker genes
