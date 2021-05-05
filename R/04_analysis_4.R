@@ -20,14 +20,14 @@ borovecki_data_clean_aug_marker_genes <- read_tsv(file = "data/03_borovecki_data
 # Load all genes dataset
 borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_clean_aug_all_genes.tsv")
 
-
+#load julie's
 
 # Wrangle data ------------------------------------------------------------
 
 # Editing data to be more reader-friendly for plots and get non-duplicated rownames
 marker_genes_wide <- borovecki_data_clean_aug_marker_genes %>% 
-  mutate(Patient = paste("patient",rownames(.))) %>% 
-  mutate(Patient = paste(outcome,Patient)) %>% 
+  mutate(Patient = str_c("patient ",rownames(.))) %>% 
+  mutate(Patient = str_c(outcome," ", Patient)) %>% 
   mutate(Patient = str_replace_all(Patient, "_", "-")) %>% 
   select(-outcome)
 
@@ -65,7 +65,9 @@ random_and_marker_genes_long <- random_and_marker_genes_long %>%
   mutate(Log2 = log2(Expression))
 
 #fold change giver vel ikke mening da vi ville have 3 elementer på 1 akse
+#prøv
 #burde jeg lave på Emilie's selected marker genes?
+#we hope not
 #skal nok have lavet en funktion til at lave ens tabel lang og log transformeret
 
 
