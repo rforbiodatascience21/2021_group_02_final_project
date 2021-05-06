@@ -3,10 +3,10 @@
 #Pivot longer and log transform values
 long_log2 <- function(data){
   return(data %>%
-           pivot_longer(cols = -outcome, #Pivot all columns except outcome
+           pivot_longer(cols = -outcome, 
                         names_to = "gene",
                         values_to = "expression") %>%
-           mutate(expression = log2(expression))) #Log transform expression values
+           mutate(expression = log2(expression))) 
 }
 
 # Find marker genes
@@ -51,9 +51,9 @@ pca_fit <- function(data){
 #Kmeans clustering
 kmeans_func <- function(data){
   return(data %>%
-           select(where(is.numeric)) %>% #Retain only numeric columns
-           kmeans(centers = 3) %>% #Do kmeans with 3 centroids
-           augment(data)) #Append cluster column to original data
+           select(where(is.numeric)) %>%
+           kmeans(centers = 3) %>%
+           augment(data))
 }
 
 
