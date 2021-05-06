@@ -117,3 +117,28 @@ boxplot_func <- function(long_data){
            theme(legend.position = "none") +
            xlab("Outcome"))
 }
+
+pca_plot <- function(data){
+  return(pca_fit(data)  %>% 
+           augment(data) %>% # add original dataset back in
+           ggplot(aes(.fittedPC1, .fittedPC2, color = outcome)) + 
+           geom_point(size = 1.5) +
+           scale_color_manual(
+             values = c(symptomatic = "#D55E00", pre_symptomatic = "#00FF00", control = "#0072B2")
+           ) +
+           theme_half_open(12) + background_grid()+
+           xlab("PC1") + ylab("PC2"))
+}
+
+variance_plot <- function(data){
+  return(pca_fit(data) %>%
+           tidy(matrix = "eigenvalues") %>%
+           ggplot(aes(PC, percent)) +
+           geom_col(fill = "#56B4E9", alpha = 0.8) +
+           scale_x_continuous(breaks = 1:9) +
+           scale_y_continuous(
+             labels = scales::percent_format(),
+             expand = expansion(mult = c(0, 0.01))
+           ) +
+           theme_minimal_hgrid(12))
+}
