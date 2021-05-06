@@ -16,6 +16,13 @@ find_marker_genes <- function(data, significant_level){
            pull(Gene))
 }
 
+find_control_means <- function(data){
+  return(data %>%
+           filter(str_detect(outcome, "control")) %>% 
+           select(where(is.numeric)) %>% 
+           map_dbl(mean))
+}
+
 
 # Add marker genes to tibble
 add_marker_genes_to_tibble <- function(data, marker_genes){

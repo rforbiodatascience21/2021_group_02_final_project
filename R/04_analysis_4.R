@@ -53,41 +53,55 @@ random_and_marker_genes_long <- random_and_marker_genes_wide %>%
 #burde jeg lave på Emilie's selected marker genes?
 #we hope not
 
-frst_foldchange_marker_genes <- marker_genes_wide %>%
+#Finding the means of the control group
+control_means_marker_genes <- marker_genes_wide %>%
   filter(
         str_detect(outcome, "control")
         ) %>% 
   select(where(is.numeric)) %>% 
-  map_dbl(.,mean)
+  map_dbl(mean)
 
-control_subset_marker_genes <- marker_genes_wide %>%
-  filter(
-    str_detect(outcome, "control")) %>% 
-  pivot_longer(cols = -outcome,
-               names_to = "gene",
-               values_to = "expression")
-  
+#dividing the matrix with the control group's means for each gene
 foldchange_marker_genes <- marker_genes_wide %>%
-  filter(
-    str_detect(outcome, "control")) %>% 
-  pivot_longer(cols = -outcome,
-               names_to = "gene",
-               values_to = "expression") %>% 
-  group_by(gene) %>% 
-  nest() %>% 
-  ungroup() %>% 
-  mutate(gene_mean = map(data, ~ mean(.$expression)))
+  select(where(is.numeric)) %>% 
+  mapply('/', . , control_means_marker_genes) %>% 
+  cbind( . , 
+        marker_genes_wide %>% select(outcome)
+        )
+  
+
+# Doing log2 transformation
+foldchange_marker_genes_long <- foldchange_marker_genes %>% 
+  long_log2()
+
+#control_subset_marker_genes <- marker_genes_wide %>%
+#  filter(
+#    str_detect(outcome, "control")) %>% 
+#  pivot_longer(cols = -outcome,
+#               names_to = "gene",
+#               values_to = "expression")
+  
+#foldchange_marker_genes <- marker_genes_wide %>%
+#  filter(
+#    str_detect(outcome, "control")) %>% 
+#  pivot_longer(cols = -outcome,
+#               names_to = "gene",
+#               values_to = "expression") %>% 
+#  group_by(gene) %>% 
+#  nest() %>% 
+#  ungroup() %>% 
+#  mutate(gene_mean = map(data, ~ mean(.$expression)))
 
 
-foldchange_marker_genes <- marker_genes_wide  %>% 
-  pivot_longer(cols = -outcome,
-               names_to = "gene",
-               values_to = "expression") %>% 
-  group_by(gene) %>% 
-  mutate(newdata = 
-           expression/mean(
-             control_subset_marker_genes %>% select(expression)
-                          ))#expression needs to only be controls
+#foldchange_marker_genes <- marker_genes_wide  %>% 
+#  pivot_longer(cols = -outcome,
+#               names_to = "gene",
+#               values_to = "expression") %>% 
+#  group_by(gene) %>% 
+#  mutate(newdata = 
+#           expression/mean(
+#             control_subset_marker_genes %>% select(expression)
+#                          ))#expression needs to only be controls
 
 # Visualise data ----------------------------------------------------------
 
@@ -111,6 +125,15 @@ ggplot(data = random_and_marker_genes_long,
   ylab("Patients")+
   ggtitle("Heatmap over marker genes and 12 random genes' expression level (Log2)")
 
+ggplot(data = foldchange_marker_genes_long, 
+       mapping = aes(x = gene, 
+                     y = fct_rev(outcome), 
+                     fill = expression)) + 
+  geom_tile() +
+  theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 0)+
+  ylab("Patients") +
+  ggtitle("Heatmap over marker genes' expression level (Log2(FC))")
 
 
 # Write data --------------------------------------------------------------
