@@ -37,12 +37,15 @@ random_genes <- borovecki_data_clean_aug_all_genes %>%
   select(-c(outcome, "201012_at", "202653_s_at", "208374_s_at", "200989_at",
             "212287_at", "218589_at", "217816_s_at", "213044_at",
             "201071_x_at", "213168_at", "201023_at", "217783_s_at")) %>% #Remove the 12 marker genes and the outcome column
-  sample(size = 12)
+  sample(size = 12) %>%
+  rowid_to_column("ID")
 
+#Add output column to random genes dataset
 borovecki_data_clean_aug_random_genes <- borovecki_data_clean_aug_all_genes %>%
   select(outcome) %>%
-  cbind(random_genes) #Append outcome column (Do this with join instead?)
-  
+  rowid_to_column("ID") %>%
+  full_join(test_random_genes) %>%
+  select(-ID)
   
 
 # Write data --------------------------------------------------------------
