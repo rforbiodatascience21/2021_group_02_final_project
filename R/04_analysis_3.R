@@ -4,10 +4,10 @@ rm(list = ls())
 
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
-#library(tidymodels) #NEEDS TO BE MOVED TO ALEKS' SCRIPT!!!
-library(broom)
-library(cowplot)
-library(viridis)
+#library(broom) #Think this is part of tidyverse???
+#library(tidymodels) #Think this is part of tidyverse
+#library(cowplot) #Don't think I use this one
+library(viridis) #I do use this one, and it is not part of tidyverse
 library(ggridges)
 library(patchwork)
 
@@ -39,15 +39,15 @@ random_genes_data_long <- borovecki_data_clean_aug_random_genes %>%
   pivot_longer(cols = -outcome, #Pivot all columns except outcome
                names_to = "gene",
                values_to = "expression") %>%
-  add_column(type = "Random genes", .before = "outcome") #Add a factor column and place it before the outcome column
+  add_column(type = "Random genes", .before = "outcome")
 
 
 #Do the same to the marker gene dataframe and join with random gene dataframe
 marker_and_random_data_long <- borovecki_data_clean_aug_marker_genes %>%
-  pivot_longer(cols = -outcome, #Pivot all columns except outcome
+  pivot_longer(cols = -outcome,
                names_to = "gene",
                values_to = "expression") %>%
-  add_column(type = "Marker genes", .before = "outcome") %>% #Add a factor column and place it before the outcome column
+  add_column(type = "Marker genes", .before = "outcome") %>%
   rbind(random_genes_data_long)
 
 
@@ -57,7 +57,7 @@ marker_and_random_data_long <- borovecki_data_clean_aug_marker_genes %>%
 #BOXPLOT---------------------
 #Boxplot log2 transformed - marker genes
 log2_marker_genes_boxplot <- borovecki_data_clean_aug_marker_genes %>%
-  long_log2() %>% #Pivot longer and log2 transform with function
+  long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
   ggtitle("Distribution of marker genes expression") +
@@ -65,7 +65,7 @@ log2_marker_genes_boxplot <- borovecki_data_clean_aug_marker_genes %>%
 
 #Boxplot log2 transformed - all genes
 log2_all_genes_boxplot <- borovecki_data_clean_aug_all_genes %>%
-  long_log2() %>% #Pivot longer and log2 transform with function
+  long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
   ggtitle("Distribution of all genes expression") +
@@ -78,8 +78,10 @@ log2_boxplots <- log2_marker_genes_boxplot + log2_all_genes_boxplot
 #RIDGELINE----------------
 #Ridgline for both marker genes and random genes
 ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
-  mutate(expression = log2(expression)) %>% #Log2 transform expression values
-  ggplot(mapping = aes(x = expression, y = outcome, fill = stat(x))) + #Make sure you know what stat(x) does
+  mutate(expression = log2(expression)) %>%
+  ggplot(mapping = aes(x = expression, 
+                       y = outcome, 
+                       fill = stat(x))) + 
   geom_density_ridges_gradient() +
   scale_fill_viridis() +
   theme_ridges() + 
@@ -95,7 +97,7 @@ test <- borovecki_data_clean_aug_marker_genes %>%
                names_to = "gene",
                values_to = "expression") %>%
   mutate(expression = log2(expression)) %>%
-  ggplot(mapping = aes(x = expression, y = gene, fill = stat(x))) +
+  ggplot(mapping = aes(x = expression, y = gene, fill = stat(x))) + #MAKE SURE YOU KNOW WHAT STAT(X) DOES
   geom_density_ridges_gradient() +
   scale_fill_viridis() +
   theme_ridges() +
@@ -109,3 +111,4 @@ print(test)
 # Write data --------------------------------------------------------------
 ggsave(file = "Results/boxplots.png", plot = log2_boxplots)
 ggsave(file = "Results/ridgeline.png", plot = ridgeline_random_comparison_plot) 
+
