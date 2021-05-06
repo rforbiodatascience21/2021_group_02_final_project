@@ -91,7 +91,10 @@ log2_fold_change_plot <- function(data, plot_title){
 kmeans_plot <- function(pca_fit_data, kmeans_data){
   return(pca_fit_data %>%
            augment(kmeans_data) %>% #Combine PC coordinates with original data
-           ggplot(mapping = aes(x = .fittedPC1, y = .fittedPC2, colour = .cluster, shape = outcome)) +
+           ggplot(mapping = aes(x = .fittedPC1, 
+                                y = .fittedPC2, 
+                                colour = .cluster, 
+                                shape = outcome)) +
            geom_point(size = 2) +
            scale_colour_viridis(discrete = TRUE) +
            theme_half_open(12) + 
