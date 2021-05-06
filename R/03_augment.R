@@ -44,7 +44,7 @@ random_genes <- borovecki_data_clean_aug_all_genes %>%
 borovecki_data_clean_aug_random_genes <- borovecki_data_clean_aug_all_genes %>%
   select(outcome) %>%
   rowid_to_column("ID") %>%
-  full_join(test_random_genes) %>%
+  full_join(random_genes) %>%
   select(-ID)
   
 
