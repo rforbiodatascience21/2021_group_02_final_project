@@ -20,69 +20,91 @@ borovecki_data_clean_aug_marker_genes <- read_tsv(file = "data/03_borovecki_data
 # Load all genes dataset
 borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_clean_aug_all_genes.tsv")
 
-#load julie's
+#Load random genes dataset 
+borovecki_data_clean_aug_random_genes <- read_tsv(file = "data/03_borovecki_data_clean_aug_random_genes.tsv")
+
 
 # Wrangle data ------------------------------------------------------------
 
 # Editing data to be more reader-friendly for plots and get non-duplicated rownames
-marker_genes_wide <- borovecki_data_clean_aug_marker_genes %>% 
-  mutate(Patient = str_c("patient ",rownames(.))) %>% 
-  mutate(Patient = str_c(outcome," ", Patient)) %>% 
-  mutate(Patient = str_replace_all(Patient, "_", "-")) %>% 
-  select(-outcome)
+marker_genes_wide <- borovecki_data_clean_aug_marker_genes %>%
+  mutate(outcome = str_c(outcome," patient ",rownames(.))) %>% 
+  mutate(outcome = str_replace_all(outcome, "_", "-"))
 
-#Extract 12 random genes 
-set.seed(22)
-random_genes <- borovecki_data_clean_aug_all_genes %>%
-  select(-c(outcome, "201012_at", "202653_s_at", "208374_s_at", "200989_at",
-            "212287_at", "218589_at", "217816_s_at", "213044_at",
-            "201071_x_at", "213168_at", "201023_at", "217783_s_at")) %>% #Remove the 12 marker genes
-  sample(size = 12) 
+#Use the 12 random genes and rename them for plotting
+random_genes_wide <- borovecki_data_clean_aug_random_genes %>% 
+  rename_if(is.numeric, ~ paste("random:",.))
 
-names(random_genes) <- paste("random:",names(random_genes))
-
+#Name marker genes as such and concatenate with marker genes
 random_and_marker_genes_wide <- marker_genes_wide %>%
   rename_if(is.numeric, ~ paste("marker:",.)) %>% 
-  cbind(random_genes)
+  cbind(random_genes_wide)
   
   
-  
-# Changing to long format
+# Doing log2 transformation
 marker_genes_long <- marker_genes_wide %>% 
-  pivot_longer(cols = -Patient,
-               names_to = "Genes",
-               values_to = "Expression")
+  long_log2()
 
 random_and_marker_genes_long <- random_and_marker_genes_wide %>% 
-  pivot_longer(cols = -Patient,
-               names_to = "Genes",
-               values_to = "Expression")
-# Doing log2 transformation
-marker_genes_long <- marker_genes_long %>% 
-  mutate(Log2 = log2(Expression))
-
-random_and_marker_genes_long <- random_and_marker_genes_long %>% 
-  mutate(Log2 = log2(Expression))
+  long_log2()
 
 #fold change giver vel ikke mening da vi ville have 3 elementer på 1 akse
 #prøv
 #burde jeg lave på Emilie's selected marker genes?
 #we hope not
-#skal nok have lavet en funktion til at lave ens tabel lang og log transformeret
 
+frst_foldchange_marker_genes <- marker_genes_wide %>%
+  filter(
+        str_detect(outcome, "control")
+        ) %>% 
+  select(where(is.numeric)) %>% 
+  map_dbl(.,mean)
+
+control_subset_marker_genes <- marker_genes_wide %>%
+  filter(
+    str_detect(outcome, "control")) %>% 
+  pivot_longer(cols = -outcome,
+               names_to = "gene",
+               values_to = "expression")
+  
+foldchange_marker_genes <- marker_genes_wide %>%
+  filter(
+    str_detect(outcome, "control")) %>% 
+  pivot_longer(cols = -outcome,
+               names_to = "gene",
+               values_to = "expression") %>% 
+  group_by(gene) %>% 
+  nest() %>% 
+  ungroup() %>% 
+  mutate(gene_mean = map(data, ~ mean(.$expression)))
+
+
+foldchange_marker_genes <- marker_genes_wide  %>% 
+  pivot_longer(cols = -outcome,
+               names_to = "gene",
+               values_to = "expression") %>% 
+  group_by(gene) %>% 
+  mutate(newdata = 
+           expression/mean(
+             control_subset_marker_genes %>% select(expression)
+                          ))#expression needs to only be controls
 
 # Visualise data ----------------------------------------------------------
 
 ggplot(data = marker_genes_long, 
-       mapping = aes(x = Genes, y = fct_rev(Patient), fill = Log2)) + 
+       mapping = aes(x = gene, 
+                     y = fct_rev(outcome), 
+                     fill = expression)) + 
   geom_tile() +
   theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
   scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 7)+
-  ylab("Patients")+
+  ylab("Patients") +
   ggtitle("Heatmap over marker genes' expression level (Log2)")
 
 ggplot(data = random_and_marker_genes_long, 
-       mapping = aes(x = Genes, y = fct_rev(Patient), fill = Log2)) + 
+       mapping = aes(x = gene, 
+                     y = fct_rev(outcome), 
+                     fill = expression)) + 
   geom_tile() +
   theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
   scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 7)+
