@@ -21,11 +21,11 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 # Transform tibble so each row is one gene and each column is a patient. Compute
 # The mean for each gene stratified on patient/control-status. Compute Log2 fold
 # change and significant level. 
-df <- borovecki_data_clean_aug_all_genes %>%
+borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
   mutate(Patient = str_c("Patient_", row_number(), "_", outcome)) %>%
   select(Patient, everything(), -outcome) %>%
-  pivot_longer(cols = -Patient, names_to = "Gene") %>%
-  pivot_wider(names_from = Patient, values_from=value) %>%
+  pivot_longer(cols = -Patient, names_to = "Gene", values_to = "Value") %>%
+  pivot_wider(id_cols = "Gene", names_from = "Patient", values_from = "Value") %>%
   mutate(Control_mean = rowMeans(across(contains("control")))) %>%
   mutate(Patient_mean = rowMeans(across(contains("symp")))) %>%
   mutate(Log2_foldchange = log2(Patient_mean/Control_mean))  %>%
@@ -36,7 +36,7 @@ df <- borovecki_data_clean_aug_all_genes %>%
 
 
 # Find the marker genes, using significant level >2.4
-marker_genes <- find_marker_genes(df, 2.4)
+marker_genes <- find_marker_genes(borovecki_data_per_gene, 2.4)
 
 # Define the marker genes used in the paper
 paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
@@ -44,8 +44,8 @@ paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at",
                         "201071_x_at", "213168_at", "201023_at", "217783_s_at")
 
 # Annotate the marker genes in the large tibble
-own_marker_genes_tibble <- add_marker_genes_to_tibble(df, marker_genes)
-paper_marker_genes_tibble <- add_marker_genes_to_tibble(df, paper_marker_genes)
+own_marker_genes_tibble <- add_marker_genes_to_tibble(borovecki_data_per_gene, marker_genes)
+paper_marker_genes_tibble <- add_marker_genes_to_tibble(borovecki_data_per_gene, paper_marker_genes)
 
 
 
