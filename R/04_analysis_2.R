@@ -58,7 +58,8 @@ pm2 <- pca_plot(borovecki_data_clean_aug_marker_genes_log2) +
 pa2 <- pca_plot(borovecki_data_clean_aug_all_genes_log2) + 
   ggtitle("PCA - All Genes - log2")
 
-pca_plots <- (pm + pa) / (pm2 + pa2)
+pca_plots <- (pm + pa) / (pm2 + pa2) +
+  plot_layout(guides = "collect") #Common legend
 
 # Plot Variance explained by each principal component
 
@@ -66,19 +67,23 @@ pca_plots <- (pm + pa) / (pm2 + pa2)
 
 
 vm <- variance_plot(borovecki_data_clean_aug_marker_genes) + 
-  ggtitle("Variance Explained - Marker Genes") 
+  ggtitle("Variance Explained - Marker Genes") + 
+  theme(plot.title = element_text(size = 10, face = "bold"))
 
 va <- variance_plot(borovecki_data_clean_aug_all_genes) + 
-  ggtitle("Variance Explained - All Genes")
+  ggtitle("Variance Explained - All Genes") + 
+  theme(plot.title = element_text(size = 10, face = "bold"))
 
 
 vm2 <- variance_plot(borovecki_data_clean_aug_marker_genes_log2) + 
-  ggtitle("Variance Explained - Marker Genes - log2") 
+  ggtitle("Variance Explained - Marker Genes - log2") + 
+  theme(plot.title = element_text(size = 10, face = "bold"))
 
 va2 <- variance_plot(borovecki_data_clean_aug_all_genes_log2) + 
-  ggtitle("Variance Explained - All Genes - log2")
+  ggtitle("Variance Explained - All Genes - log2") + 
+  theme(plot.title = element_text(size = 10, face = "bold"))
 
-variance_explained_plots <- (vm + va) / (vm2 + va2)
+variance_explained_plots <- (vm + va) / (vm2 + va2) 
   
 
 #KMEANS 
