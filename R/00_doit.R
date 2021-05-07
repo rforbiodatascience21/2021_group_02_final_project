@@ -8,3 +8,4 @@ source(file = "R/04_analysis_3.R")
 source(file = "R/04_analysis_4.R")
 
 
+rmarkdown::render("doc/presentation.Rmd")
