@@ -73,15 +73,15 @@ va <- variance_plot(borovecki_data_clean_aug_all_genes) +
 
 
 vm2 <- variance_plot(borovecki_data_clean_aug_marker_genes_log2) + 
-  ggtitle("Variance Explained - Marker Genes") 
+  ggtitle("Variance Explained - Marker Genes - log2") 
 
 va2 <- variance_plot(borovecki_data_clean_aug_all_genes_log2) + 
-  ggtitle("Variance Explained - All Genes")
+  ggtitle("Variance Explained - All Genes - log2")
 
 variance_explained_plots <- (vm + va) / (vm2 + va2)
   
 
-#KMEANS (Julies)
+#KMEANS 
 #Plot kmeans clustering for marker genes
 kmeans_marker_genes_plot <- kmeans_plot(pca_fit(borovecki_data_clean_aug_marker_genes), kmeans_func(borovecki_data_clean_aug_marker_genes)) + 
   ggtitle("Marker genes", subtitle = "K-means clustering")
