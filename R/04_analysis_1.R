@@ -36,7 +36,7 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
 
 
 # Find the marker genes, using significant level >2.4
-marker_genes <- find_marker_genes(borovecki_data_per_gene, 2.4)
+own_marker_genes <- find_marker_genes(borovecki_data_per_gene, 2.4)
 
 # Define the marker genes used in the paper
 paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
@@ -44,7 +44,7 @@ paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at",
                         "201071_x_at", "213168_at", "201023_at", "217783_s_at")
 
 # Annotate the marker genes in the large tibble
-own_marker_genes_tibble <- add_marker_genes_to_tibble(borovecki_data_per_gene, marker_genes)
+own_marker_genes_tibble <- add_marker_genes_to_tibble(borovecki_data_per_gene, own_marker_genes)
 paper_marker_genes_tibble <- add_marker_genes_to_tibble(borovecki_data_per_gene, paper_marker_genes)
 
 
