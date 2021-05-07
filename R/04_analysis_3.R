@@ -4,8 +4,7 @@ rm(list = ls())
 
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
-#library(tidymodels) #I don't think this one is needed
-library(viridis) #I do use this one, and it is not part of tidyverse
+library(viridis)
 library(ggridges)
 library(patchwork)
 
