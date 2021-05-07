@@ -64,19 +64,24 @@ kmeans_func <- function(data){
 log2_fold_change_plot <- function(data, plot_title){
   return(data %>%
            ggplot(mapping = aes(x = Gene, 
-                              y = Log2_foldchange,
-                              color = Significant_level,
-                              shape = Marker_gene)) +
+                                y = Log2_foldchange,
+                                color = Significant_level,
+                                shape = Marker_gene)) +
            geom_point(size = 2) +
-           geom_hline(yintercept = 1.8, color = "blue", size = 1) + 
-           geom_hline(yintercept = -1, color = "blue", size = 1) + 
+           geom_hline(yintercept = 1.8, 
+                      color = "blue", 
+                      size = 1) + 
+           geom_hline(yintercept = -1, 
+                      color = "blue", 
+                      size = 1) + 
            labs(x = "Gene", 
                 y = "Log2 fold change", 
                 title = plot_title,
                 shape = "Marker gene") +
-           scale_colour_manual(name = "Significant level", values = 
-                                 c("grey54", "red", "green3")) + 
-           theme(axis.text.x = element_blank(), axis.ticks = element_blank()) +
+           scale_colour_manual(name = "Significant level", 
+                               values = c("grey54", "red", "green3")) + 
+           theme(axis.text.x = element_blank(), 
+                 axis.ticks = element_blank()) +
            geom_label_repel(aes(
                             label = Marker_gene_name), 
                             nudge_y = -0.2, 
