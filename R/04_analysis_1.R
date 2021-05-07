@@ -35,8 +35,9 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
   select(Gene, Patient_mean, Control_mean, Log2_foldchange, Significant_level, everything())
 
 
-# Find the marker genes, using significant level >2.4
+# Find the marker genes, using significant level >2.4, write the result to file
 own_marker_genes <- find_marker_genes(borovecki_data_per_gene, 2.4)
+write_lines(own_marker_genes, file = "data/own_marker_genes.txt")
 
 # Define the marker genes used in the paper
 paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
