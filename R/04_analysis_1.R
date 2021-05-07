@@ -26,7 +26,6 @@ df <- borovecki_data_clean_aug_all_genes %>%
   select(Patient, everything(), -outcome) %>%
   pivot_longer(cols = -Patient, names_to = "Gene") %>%
   pivot_wider(names_from = Patient, values_from=value) %>%
-  rowwise %>%
   mutate(Control_mean = rowMeans(across(contains("control")))) %>%
   mutate(Patient_mean = rowMeans(across(contains("symp")))) %>%
   mutate(Log2_foldchange = log2(Patient_mean/Control_mean))  %>%
@@ -36,7 +35,7 @@ df <- borovecki_data_clean_aug_all_genes %>%
   select(Gene, Patient_mean, Control_mean, Log2_foldchange, Significant_level, everything())
 
 
-# Find the marker genes, using significant level >2.5
+# Find the marker genes, using significant level >2.4
 marker_genes <- find_marker_genes(df, 2.4)
 
 # Define the marker genes used in the paper
