@@ -5,7 +5,6 @@ rm(list = ls())
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
 #library(tidymodels) #I don't think this one is needed
-#library(cowplot) #Don't think I use this one
 library(viridis) #I do use this one, and it is not part of tidyverse
 library(ggridges)
 library(patchwork)
@@ -82,7 +81,7 @@ ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
   mutate(expression = log2(expression)) %>%
   ggplot(mapping = aes(x = expression, 
                        y = outcome, 
-                       fill = stat(x))) + #MAKE SURE YOU KNOW WHAT STAT(X) DOES
+                       fill = stat(x))) +
   geom_density_ridges_gradient() +
   scale_fill_viridis() +
   theme_ridges() + 
@@ -91,25 +90,6 @@ ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
   scale_y_discrete(limit = c("symptomatic", "pre_symptomatic", "control")) +
   labs(x = "mRNA expression") +
   facet_wrap(~ type)
-
-
-#Ridgeline for each gene (REMEMBER TO DELETE!)
-test <- borovecki_data_clean_aug_marker_genes %>%
-  pivot_longer(cols = -outcome,
-               names_to = "gene",
-               values_to = "expression") %>%
-  mutate(expression = log2(expression)) %>%
-  ggplot(mapping = aes(x = expression, 
-                       y = gene, 
-                       fill = stat(x))) + 
-  geom_density_ridges_gradient() +
-  scale_fill_viridis() +
-  theme_ridges() +
-  theme(legend.position = "none", 
-        axis.title.y = element_blank()) +
-  labs(x = "mRNA expression") +
-  facet_wrap(~ outcome)
-print(test)
 
 
 
