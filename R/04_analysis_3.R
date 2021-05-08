@@ -30,8 +30,7 @@ borovecki_data_clean_aug_random_genes <- read_tsv(file = "data/03_borovecki_data
 
 # Wrangle data ------------------------------------------------------------
 
-#RANDOM DATA-----------------
-#Pivot random gene dataframe and add type
+#Pivot random gene dataframe and add type as factor column
 random_genes_data_long <- borovecki_data_clean_aug_random_genes %>% 
   pivot_longer(cols = -outcome,
                names_to = "gene",
@@ -59,7 +58,7 @@ log2_marker_genes_boxplot <- borovecki_data_clean_aug_marker_genes %>%
   long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
-  ggtitle("Distribution of marker genes expression") +
+  ggtitle("Marker genes", subtitle = "Distribution of mRNA expression") +
   ylab("log2(mRNA expression)")
 
 #Boxplot log2 transformed - all genes
@@ -67,7 +66,7 @@ log2_all_genes_boxplot <- borovecki_data_clean_aug_all_genes %>%
   long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
-  ggtitle("Distribution of all genes expression") +
+  ggtitle("All genes", subtitle = "Distribution of mRNA expression") +
   ylab("log2(mRNA expression)")
 
 log2_boxplots <- log2_marker_genes_boxplot + log2_all_genes_boxplot
@@ -87,12 +86,19 @@ ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
   theme(legend.position = "none", 
         axis.title.y = element_blank()) +
   scale_y_discrete(limit = c("symptomatic", "pre_symptomatic", "control")) +
-  labs(x = "mRNA expression") +
+  labs(x = "log2(mRNA expression)") +
   facet_wrap(~ type)
 
 
 
 # Write data --------------------------------------------------------------
-ggsave(file = "Results/boxplots.png", plot = log2_boxplots)
-ggsave(file = "Results/ridgeline.png", plot = ridgeline_random_comparison_plot) 
+ggsave(file = "Results/boxplots.png", 
+       plot = log2_boxplots, 
+       width = 6.77, 
+       height = 2.83)
+
+ggsave(file = "Results/ridgeline.png", 
+       plot = ridgeline_random_comparison_plot, 
+       width = 6.77, 
+       height = 2.83) 
 
