@@ -6,6 +6,8 @@ source(file = "R/04_analysis_1.R")
 source(file = "R/04_analysis_2.R")
 source(file = "R/04_analysis_3.R")
 source(file = "R/04_analysis_4.R")
+source(file = "R/04_analysis_5.R")
+source(file = "R/04_analysis_6.R")
 
 
 rmarkdown::render("doc/presentation.Rmd")
