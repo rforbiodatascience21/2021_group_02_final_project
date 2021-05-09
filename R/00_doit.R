@@ -9,5 +9,5 @@ source(file = "R/04_analysis_4.R")
 source(file = "R/04_analysis_5.R")
 source(file = "R/04_analysis_6.R")
 
-
+# Knit the presentation ---------------------------------------------------
 rmarkdown::render("doc/presentation.Rmd")
