@@ -1,4 +1,4 @@
-#DATA STUFF FUNCTIONS-----------------------------------------------------------
+#DATA WRANGLING FUNCTIONS-------------------------------------------------------
 
 #Pivot longer and log transform values
 long_log2 <- function(data){
