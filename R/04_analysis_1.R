@@ -77,5 +77,5 @@ paper_log2_fold_change_plot <- log2_fold_change_plot(
 
 
 # Write data --------------------------------------------------------------
-ggsave(file = "Results/own_log2_fold_change.png", plot = own_log2_fold_change_plot)
-ggsave(file = "Results/paper_log2_fold_change.png", plot = paper_log2_fold_change_plot) 
+ggsave(file = "Results/own_log2_fold_change.png", plot = own_log2_fold_change_plot, width = 25, height= 14, unit = "cm")
+ggsave(file = "Results/paper_log2_fold_change.png", plot = paper_log2_fold_change_plot, width = 25, height= 14, unit = "cm") 
