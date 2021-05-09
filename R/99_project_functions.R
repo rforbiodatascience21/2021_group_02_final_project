@@ -61,34 +61,41 @@ kmeans_func <- function(data){
 #PLOTTING FUNCTIONS-------------------------------------------------------------
 
 # Log2 fold change plot
-log2_fold_change_plot <- function(data, plot_title){
+log2_fold_change_plot <- function(data, plot_title, pre_dif_y_nodge){
   return(data %>%
            ggplot(mapping = aes(x = Gene, 
                                 y = Log2_foldchange,
-                                color = Significant_level,
-                                shape = Marker_gene)) +
-           geom_point(size = 2) +
+                                color = Marker_gene,
+                                fill = Significant_level),show_guide=F) +
+           geom_point(size = 2,
+                      stroke = 1,
+                      shape = 21) +
            geom_hline(yintercept = 1.8, 
                       color = "blue", 
                       size = 1) + 
            geom_hline(yintercept = -1, 
                       color = "blue", 
-                      size = 1) + 
+                      size = 1) +
            labs(x = "Gene", 
                 y = "Log2 fold change", 
                 title = plot_title,
                 shape = "Marker gene") +
-           scale_colour_manual(name = "Significant level", 
-                               values = c("grey54", "red", "green3")) + 
            theme(axis.text.x = element_blank(), 
                  axis.ticks = element_blank()) +
-           geom_label_repel(aes(
-                            label = Marker_gene_name), 
-                            nudge_y = -0.2, 
-                            size = 2.6, color = "black", 
+           geom_label_repel(aes(label = Marker_gene_name), 
+                            nudge_y = pre_dif_y_nodge, 
+                            size = 2.6, 
+                            color = "black", 
                             min.segment.length = unit(0, 'lines'), 
-                            max.overlaps = Inf))
-  
+                            max.overlaps = Inf) +
+           guides(fill = guide_legend(override.aes = aes(label = ""))) +
+           scale_fill_manual(name = "Significance level", 
+                             values = c("Non-significant" = "grey54", 
+                                        "Significantly downregulated" = "red", 
+                                        "Significantly upregulated" = "green3")) +
+           scale_color_manual(name = "Marker gene", 
+                              values = c("0"="#00000000",
+                                         "1" = "black")))
 }
 
 
