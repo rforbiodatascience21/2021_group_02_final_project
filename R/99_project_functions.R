@@ -42,8 +42,8 @@ add_marker_genes_to_tibble <- function(data, marker_genes){
 #PCA analysis
 pca_fit <- function(data){
   return(data %>% 
-           select(where(is.numeric)) %>% # retain only numeric columns
-           scale() %>% # scale data
+           select(where(is.numeric)) %>%
+           scale() %>%
            prcomp())
 }
 
