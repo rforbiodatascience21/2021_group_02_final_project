@@ -18,9 +18,12 @@ borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 # Transpose the tibble 
 borovecki_data_clean <- borovecki_data %>%
-  pivot_longer(cols = -ID_REF, names_to = "Patient", values_to = "Values") %>%
-  pivot_wider(id_cols = Patient, names_from = ID_REF, values_from = Values)
-  
+  pivot_longer(cols = -ID_REF, 
+               names_to = "Patient", 
+               values_to = "Values") %>%
+  pivot_wider(id_cols = Patient, 
+              names_from = ID_REF, 
+              values_from = Values)
   
 
 # Write data --------------------------------------------------------------
