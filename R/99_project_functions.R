@@ -138,7 +138,8 @@ pca_plot <- function(data){
            scale_color_manual(
              values = c(symptomatic = "#D55E00", pre_symptomatic = "#00FF00", control = "#0072B2")
            ) +
-           theme_half_open(12) + background_grid()+
+           theme_half_open(font_size = 12) + 
+           background_grid()+
            xlab("PC1") + ylab("PC2"))
 }
 
