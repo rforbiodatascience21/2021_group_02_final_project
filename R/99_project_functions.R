@@ -133,7 +133,7 @@ boxplot_func <- function(long_data){
 pca_plot <- function(data){
   return(pca_fit(data)  %>% 
            augment(data) %>% # add original dataset back in
-           ggplot(aes(.fittedPC1, .fittedPC2, color = outcome)) + 
+           ggplot(aes(x = .fittedPC1, y = .fittedPC2, color = outcome)) + 
            geom_point(size = 1.5) +
            scale_color_manual(
              values = c(symptomatic = "#D55E00", pre_symptomatic = "#00FF00", control = "#0072B2")
