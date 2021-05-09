@@ -24,8 +24,12 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
   mutate(Patient = str_c("Patient_", row_number(), "_", outcome)) %>%
   select(Patient, everything(), -outcome) %>%
-  pivot_longer(cols = -Patient, names_to = "Gene", values_to = "Value") %>%
-  pivot_wider(id_cols = "Gene", names_from = "Patient", values_from = "Value") %>%
+  pivot_longer(cols = -Patient, 
+               names_to = "Gene", 
+               values_to = "Value") %>%
+  pivot_wider(id_cols = "Gene", 
+              names_from = "Patient", 
+              values_from = "Value") %>%
   mutate(Control_mean = rowMeans(across(contains("control")))) %>%
   mutate(Patient_mean = rowMeans(across(contains("symp")))) %>%
   mutate(Log2_foldchange = log2(Patient_mean/Control_mean))  %>%
@@ -50,9 +54,6 @@ own_marker_genes_tibble <- add_marker_genes_to_tibble(
   
 paper_marker_genes_tibble <- add_marker_genes_to_tibble(
   borovecki_data_per_gene, paper_marker_genes)
-
-small_df <- own_marker_genes_tibble %>%
-  filter(Marker_gene == 1)
 
 
 # Visualize data ----------------------------------------------------------
