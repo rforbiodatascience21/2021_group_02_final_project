@@ -54,6 +54,7 @@ paper_marker_genes_tibble <- add_marker_genes_to_tibble(
 small_df <- own_marker_genes_tibble %>%
   filter(Marker_gene == 1)
 
+
 # Visualize data ----------------------------------------------------------
 
 # Visualize using our own selected marker genes
@@ -67,13 +68,11 @@ own_log2_fold_change_plot <- log2_fold_change_plot(
              size = 1) +
   scale_linetype_manual(name ="Marker gene threshold", values = 'dotted')
 
-
 # Visualize using the marker genes from the paper
 paper_log2_fold_change_plot <- log2_fold_change_plot(
           data = paper_marker_genes_tibble, 
           plot_title = "Log2 fold change of expression data - paper marker genes",
           pre_dif_y_nodge = 0)
-
 
 
 # Write data --------------------------------------------------------------
