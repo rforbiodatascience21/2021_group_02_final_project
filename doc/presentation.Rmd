@@ -1,7 +1,7 @@
 ---
 title: "Finding marker genes related to Huntingtons disease"
-author: Group 2
-date: March 22, 2005
+author: Group 2 - Alex, Emilie, Asta and Julie
+date: May 11, 2021
 output: ioslides_presentation
 ---
 
@@ -19,9 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Materials and method
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+
 
 # Results
 
@@ -41,40 +39,49 @@ knitr::include_graphics("../Results/paper_log2_fold_change.png")
 
 ## PCA
 
-```{r pca, echo=FALSE, fig.cap="PCA", out.width = '80%'}
+```{r pca, echo=FALSE, fig.cap="PCA analysis of gene expression data", out.width = '55%'}
 knitr::include_graphics("../Results/pca_plots.png")
 ```
+## PCA
 
-```{r pca, echo=FALSE, fig.cap="Variance Explained by components", out.width = '80%'}
+```{r variance, echo=FALSE, fig.cap="Variance Explained by components", out.width = '55%'}
 knitr::include_graphics("../Results/variance_explained_plots.png")
 ```
 
 ## Distribution of gene expression
 
-```{r pca, echo=FALSE, fig.cap="Gene expression", out.width = '100%'}
-knitr::include_graphics("../Results/boxplot.png")
-```
-
-```{r pca, echo=FALSE, fig.cap="Gene expression", out.width = '100%'}
-knitr::include_graphics("../Results/boxplot.png")
-```
-
-## Plot 3
-
-```{r}
-plot(pressure)
+```{r boxplot, echo=FALSE, fig.cap="Boxplots of log2 transformed gene expression", out.width = '100%'}
+knitr::include_graphics("../Results/boxplots.png")
 ```
 
 
-## Plot 4
+## Distribution of gene expression
 
-```{r}
-plot(pressure)
+```{r ridgeline, echo=FALSE, fig.cap="Gene expression", out.width = '100%'}
+knitr::include_graphics("../Results/ridgeline.png")
+```
+
+## Heatmap marker genes
+
+```{r heatmap_marker_genes, echo=FALSE, fig.cap="Marker genes", out.width = '100%'}
+knitr::include_graphics("../Results/heatmap_log2_fold_change_marker_genes.png")
 ```
 
 
-## Plot 5
+## Heatmap marker genes and random genes
 
-```{r}
-plot(pressure)
+```{r heatmap_marker_genes_and_random, echo=FALSE, fig.cap="Marker genes and random genes", out.width = '100%'}
+knitr::include_graphics("../Results/heatmap_log2_fold_change_random_and_marker_genes.png")
 ```
+
+
+## k-means
+
+```{r k-means, echo=FALSE, fig.cap="k-means", out.width = '100%'}
+knitr::include_graphics("../Results/kmeans_plots.png")
+```
+
+
+# Discussion
+
+## Discussion
