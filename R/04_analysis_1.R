@@ -49,7 +49,6 @@ own_marker_genes <- borovecki_data_per_gene %>%
         wt = Log2_foldchange) %>%
   pull(Gene)
 
-
 # Define the marker genes used in the paper
 paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
                         "212287_at", "218589_at", "217816_s_at", "213044_at", 
