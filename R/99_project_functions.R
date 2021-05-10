@@ -97,7 +97,7 @@ log2_fold_change_plot <- function(data, plot_title, pre_dif_y_nodge){
 #Point plot of kmeans clusters with PC1 and PC2 on the axes
 kmeans_plot <- function(pca_fit_data, kmeans_data){
   return(pca_fit_data %>%
-           augment(kmeans_data) %>% #Combine PC coordinates with original data
+           augment(kmeans_data) %>%
            ggplot(mapping = aes(x = .fittedPC1, 
                                 y = .fittedPC2, 
                                 colour = .cluster, 
