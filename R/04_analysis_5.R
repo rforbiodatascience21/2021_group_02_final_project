@@ -1,3 +1,5 @@
+# KMEANS ANALYSIS
+
 # Clear workspace ---------------------------------------------------------
 rm(list = ls())
 
@@ -17,6 +19,7 @@ borovecki_data_clean_aug_marker_genes <- read_tsv(file = "data/03_borovecki_data
 
 # Load all genes dataset
 borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_clean_aug_all_genes.tsv")
+
 
 
 # Wrangle data ------------------------------------------------------------
