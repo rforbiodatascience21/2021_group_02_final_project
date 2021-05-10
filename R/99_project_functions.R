@@ -102,9 +102,9 @@ kmeans_plot <- function(pca_fit_data, kmeans_data){
                                 y = .fittedPC2, 
                                 colour = .cluster, 
                                 shape = outcome)) +
-           geom_point(size = 2) +
+           geom_point(size = 2, alpha = 0.7) +
            scale_colour_viridis(discrete = TRUE) +
-           theme_half_open(12) + 
+           theme_half_open() + 
            background_grid() +
            labs(x = "PC1", 
                 y = "PC2",
