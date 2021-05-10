@@ -29,6 +29,7 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::include_graphics("../Results/own_log2_fold_change.png")
 ```
 
+## Log2 fold gene expression 
 
 ```{r log2_fold_change paper genes, echo=FALSE, fig.cap="Marker genes from the paper", out.width = '100%'}
 knitr::include_graphics("../Results/paper_log2_fold_change.png")
