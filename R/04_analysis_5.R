@@ -34,7 +34,8 @@ pca_fit_marker_genes_data <- pca_fit(borovecki_data_clean_aug_marker_genes)
 # Visualise data ----------------------------------------------------------
 
 #Plot kmeans clustering for marker genes
-kmeans_marker_genes_plot <- kmeans_plot(pca_fit_marker_genes_data, kmeans_marker_genes_data) + 
+kmeans_marker_genes_plot <- kmeans_plot(pca_fit_marker_genes_data, 
+                                        kmeans_marker_genes_data) + 
   ggtitle("Marker genes")
 
 
