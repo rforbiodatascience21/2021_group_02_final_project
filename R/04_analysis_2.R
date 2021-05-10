@@ -13,8 +13,6 @@ library(viridis)
 source(file = "R/99_project_functions.R")
 
 
-
-
 # Load data ---------------------------------------------------------------
 
 # Load marker genes dataset
@@ -39,9 +37,6 @@ borovecki_data_clean_aug_all_genes_log2 <-  borovecki_data_clean_aug_all_genes %
 # Visualise data ----------------------------------------------------------
 
 # Plot PCA
-
-
-
 
 
 
@@ -86,22 +81,7 @@ va2 <- variance_plot(borovecki_data_clean_aug_all_genes_log2) +
 variance_explained_plots <- (vm + va) / (vm2 + va2) 
   
 
-#KMEANS 
-#Plot kmeans clustering for marker genes
-kmeans_marker_genes_plot <- kmeans_plot(pca_fit(borovecki_data_clean_aug_marker_genes), kmeans_func(borovecki_data_clean_aug_marker_genes)) + 
-  ggtitle("Marker genes", subtitle = "K-means clustering")
-
-#Plot kmeans clustering for all genes
-kmeans_all_genes_plot <- kmeans_plot(pca_fit(borovecki_data_clean_aug_all_genes), kmeans_func(borovecki_data_clean_aug_all_genes)) + 
-  ggtitle("All genes", subtitle = "K-means clustering")
-
-kmeans_plots <- kmeans_marker_genes_plot + 
-                kmeans_all_genes_plot +
-                plot_layout(guides = "collect") #Common legend
-
-
 # Write data --------------------------------------------------------------
-ggsave(file = "Results/kmeans_plots.png", plot = kmeans_plots)
 
 ggsave(file = "Results/pca_plots.png", plot = pca_plots)
 
