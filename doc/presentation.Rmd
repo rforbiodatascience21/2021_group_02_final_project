@@ -1,17 +1,16 @@
 ---
-title: "Finding marker genes related to Huntingtons disease"
+title: Identifying marker genes related to Huntingtons disease
 author: Group 2 - Alex, Emilie, Asta and Julie
 date: May 11, 2021
 output: 
   ioslides_presentation:
-  incremental: true
+    logo: white_dtu_logo.jpg
 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
 
 
 # Introduction
@@ -26,13 +25,18 @@ __Huntington's disease__:<br>
 
 # Materials and method
 
-## Materials and method
+## Data
 Borovecki F. _et al_, 2005 <br><br>
 
 Expression data from:<br>
 - 14 healthy controls<br>
 - 5 pre-symptomatic patients<br>
 - 12 symptomatic patients
+
+## Method
+```{r flow_chart, echo=FALSE, fig.cap="", out.width = '50%', fig.align='center'}
+knitr::include_graphics("../doc/flow_chart.PNG")
+```
 
 # Results
 
@@ -51,12 +55,12 @@ knitr::include_graphics("../Results/paper_log2_fold_change.png")
 
 ## PCA
 
-```{r pca, echo=FALSE, fig.cap="PCA analysis of gene expression data", out.width = '55%'}
+```{r pca, echo=FALSE, fig.cap="PCA analysis of gene expression data", out.width = '60%', fig.align='center'}
 knitr::include_graphics("../Results/pca_plots.png")
 ```
 ## PCA
 
-```{r variance, echo=FALSE, fig.cap="Variance explained by each principal component", out.width = '55%'}
+```{r variance, echo=FALSE, fig.cap="Variance explained by each principal component", out.width = '60%', fig.align='center'}
 knitr::include_graphics("../Results/variance_explained_plots.png")
 ```
 
