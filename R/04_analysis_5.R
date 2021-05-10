@@ -5,7 +5,9 @@ rm(list = ls())
 
 
 # Load libraries ----------------------------------------------------------
-library("tidyverse")
+library(tidyverse)
+library(broom)
+library(cowplot)
 
 
 # Define functions --------------------------------------------------------
