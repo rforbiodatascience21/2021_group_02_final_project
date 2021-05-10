@@ -10,11 +10,13 @@ long_log2 <- function(data){
 }
 
 # Find marker genes
-find_marker_genes <- function(data, significant_level){
+find_marker_genes <- function(data, number_of_wanted_marker_genes){
   return(data %>%
-           filter(Log2_foldchange > significant_level) %>%
+           arrange(desc(Significant_level)) %>%
+           top_n(n = number_of_wanted_marker_genes) %>%
            pull(Gene))
 }
+
 
 find_control_means <- function(data){
   return(data %>%
