@@ -94,7 +94,7 @@ knitr::include_graphics("../Results/heatmap_log2_fold_change_random_and_marker_g
 ## k-means
 
 ```{r Clustering patients using k-means, echo=FALSE, fig.cap="", out.width = '100%'}
-knitr::include_graphics("../Results/kmeans_plots.png")
+knitr::include_graphics("../Results/kmeans_plot.png")
 ```
 
 
