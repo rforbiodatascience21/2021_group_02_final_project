@@ -56,11 +56,11 @@ knitr::include_graphics("../Results/pca_plots.png")
 ```
 ## PCA
 
-```{r variance, echo=FALSE, fig.cap="Variance Explained by components", out.width = '55%'}
+```{r variance, echo=FALSE, fig.cap="Variance explained by each principal component", out.width = '55%'}
 knitr::include_graphics("../Results/variance_explained_plots.png")
 ```
 
-## Distribution of gene expression
+## Gene expression levels grouped by outcome
 
 ```{r boxplot, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/boxplots.png")
