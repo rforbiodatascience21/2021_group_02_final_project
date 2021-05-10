@@ -31,12 +31,16 @@ borovecki_data_clean_aug_random_genes <- read_tsv(file = "data/03_borovecki_data
 # Editing data to be more reader-friendly for plots and get non-duplicated rownames
 marker_genes_wide <- borovecki_data_clean_aug_marker_genes %>%
   mutate(outcome = str_c(outcome," patient ",rownames(.))) %>% 
-  mutate(outcome = str_replace_all(outcome, "_", "-"))
+  mutate(outcome = str_replace_all(outcome, 
+                                   pattern="_", 
+                                   replacement="-"))
 
 # Use the 12 random genes and rename them
 random_genes_wide <- borovecki_data_clean_aug_random_genes %>% 
   mutate(outcome = str_c(outcome," patient ",rownames(.))) %>% 
-  mutate(outcome = str_replace_all(outcome, "_", "-"))
+  mutate(outcome = str_replace_all(outcome, 
+                                   pattern="_", 
+                                   replacement="-"))
 
 
 
@@ -88,11 +92,15 @@ markerPlotOnly <- ggplot(data = foldchange_marker_genes_long,
                      y = fct_rev(outcome), 
                      fill = expression)) + 
   geom_tile() +
-  theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
-  scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 0)+
+  theme(axis.text.x = element_text(angle = 50, 
+                                   hjust = 1)) + 
+  scale_fill_gradient2(low = "red", 
+                       high = "green", 
+                       mid = "white", 
+                       midpoint = 0)+
   ylab("Patients") +
   xlab("Genes") +
-  labs(fill = "Log2(foldchange)")+
+  labs(fill = "Log2(foldchange)") +
   ggtitle("Marker genes' expression level")
 
 
@@ -101,8 +109,12 @@ randomPlotOnly <- ggplot(data = foldchange_random_genes_long,
                                        y = fct_rev(outcome), 
                                        fill = expression)) + 
   geom_tile() +
-  theme(axis.text.x = element_text(angle = 50, hjust = 1)) + 
-  scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 0)+
+  theme(axis.text.x = element_text(angle = 50, 
+                                   hjust = 1)) + 
+  scale_fill_gradient2(low = "red", 
+                       high = "green", 
+                       mid = "white", 
+                       midpoint = 0)+
   ylab("Patients") +
   xlab("Genes") +
   labs(fill = "Log2(foldchange)")+
@@ -110,11 +122,12 @@ randomPlotOnly <- ggplot(data = foldchange_random_genes_long,
 
 
 gatheredPlot <- markerPlotOnly + 
-  randomPlotOnly + theme(legend.position = "none",
-                         axis.text.y = element_blank(), 
-                        axis.ticks.y = element_blank(),
-                        axis.title.y = element_blank())+
-  plot_layout(guides = "collect")+
+  randomPlotOnly + 
+  theme(legend.position = "none",
+        axis.text.y = element_blank(), 
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank()) +
+  plot_layout(guides = "collect") +
   plot_annotation(title = "Heatmap over marker genes' and 12 random genes' expression level (Log2(FC))")
 
 
