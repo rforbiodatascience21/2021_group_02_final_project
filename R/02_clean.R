@@ -14,10 +14,13 @@ source(file = "R/99_project_functions.R")
 borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 
+
 # Wrangle data ------------------------------------------------------------
+
 
 # Transpose the tibble 
 borovecki_data_clean <- borovecki_data %>%
+  drop_na() %>%
   pivot_longer(cols = -ID_REF, 
                names_to = "Patient", 
                values_to = "Values") %>%
