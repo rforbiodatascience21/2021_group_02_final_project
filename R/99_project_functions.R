@@ -9,13 +9,6 @@ long_log2 <- function(data){
            mutate(expression = log2(expression))) 
 }
 
-# Find marker genes
-find_marker_genes <- function(data, number_of_wanted_marker_genes){
-  return(data %>%
-           arrange(desc(Significant_level)) %>%
-           top_n(n = number_of_wanted_marker_genes) %>%
-           pull(Gene))
-}
 
 
 find_control_means <- function(data){
