@@ -60,8 +60,7 @@ log2_marker_genes_boxplot <- borovecki_data_clean_aug_marker_genes %>%
   long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
-  ggtitle("Marker genes", 
-          subtitle = "Distribution of mRNA expression") +
+  ggtitle("Marker genes") +
   ylab("log2(mRNA expression)")
 
 #Boxplot log2 transformed - all genes
@@ -69,8 +68,7 @@ log2_all_genes_boxplot <- borovecki_data_clean_aug_all_genes %>%
   long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
-  ggtitle("All genes", 
-          subtitle = "Distribution of mRNA expression") +
+  ggtitle("All genes") +
   ylab("log2(mRNA expression)")
 
 log2_boxplots <- log2_marker_genes_boxplot + log2_all_genes_boxplot
