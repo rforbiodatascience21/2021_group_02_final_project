@@ -10,7 +10,7 @@ long_log2 <- function(data){
 }
 
 
-
+#Find mean of control patient values
 find_control_means <- function(data){
   return(data %>%
            filter(str_detect(outcome, "control")) %>% 
