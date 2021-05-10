@@ -40,10 +40,10 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
 
 
 # Find the marker genes, using significant level >2.4, write the result to file
+own_marker_genes <- borovecki_data_per_gene %>%
+  top_n(12, wt = Log2_foldchange) %>%
+  pull(Gene)
 
-# Find marker genes
-own_marker_genes <- find_marker_genes(data = borovecki_data_per_gene, 
-                                      number_of_wanted_marker_genes = 12)
 write_lines(own_marker_genes, file = "data/own_marker_genes.txt")
 
 # Define the marker genes used in the paper
@@ -65,12 +65,7 @@ paper_marker_genes_tibble <- add_marker_genes_to_tibble(
 own_log2_fold_change_plot <- log2_fold_change_plot(
           data = own_marker_genes_tibble, 
           plot_title = "Log2 fold change of expression data - own marker genes",
-          pre_dif_y_nodge = 0.5) +
-  geom_hline(aes(linetype = "Selected significant threshold for own marker genes",
-                 yintercept = 2.4),
-             color = "blue", 
-             size = 1) +
-  scale_linetype_manual(name ="Marker gene threshold", values = 'dotted')
+          pre_dif_y_nodge = 0.5)
 
 # Visualize using the marker genes from the paper
 paper_log2_fold_change_plot <- log2_fold_change_plot(
