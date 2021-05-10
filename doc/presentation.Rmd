@@ -89,7 +89,7 @@ knitr::include_graphics("../Results/heatmap_log2_fold_change_random_and_marker_g
 
 ## k-means
 
-```{r k-means, echo=FALSE, fig.cap="", out.width = '100%'}
+```{r Clustering patients using k-means, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/kmeans_plots.png")
 ```
 
@@ -98,8 +98,8 @@ knitr::include_graphics("../Results/kmeans_plots.png")
 
 ## Discussion
 - 12 genes show upregulated expression
-- Pre-sympotimatic patients
-- Early diagnosis; Preparing patients and their families
-- Further research leading to treatment
+- Pre-symptomatic patients
+- Further research leading to potential treatment
+- If we had more time and information...
 
 ## Questions?

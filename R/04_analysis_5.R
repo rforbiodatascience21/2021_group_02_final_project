@@ -42,7 +42,7 @@ kmeans_marker_genes_plot <- kmeans_plot(pca_fit_marker_genes_data, kmeans_marker
   ggtitle("Marker genes")
 
 #Plot kmeans clustering for all genes
-kmeans_all_genes_plot <- kmeans_plot(pca_fit_marker_genes_data, kmeans_marker_genes_data) + 
+kmeans_all_genes_plot <- kmeans_plot(pca_fit_all_genes_data, kmeans_marker_genes_data) + 
   ggtitle("All genes")
 
 kmeans_plots <- kmeans_marker_genes_plot + kmeans_all_genes_plot +
