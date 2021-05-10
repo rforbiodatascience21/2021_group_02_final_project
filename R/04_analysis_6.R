@@ -36,4 +36,8 @@ own_marker_genes_pca_fit_plot <- pca_plot(borovecki_data_clean_aug_own_marker_ge
 
 
 # Write data --------------------------------------------------------------
-ggsave(file = "Results/own_marker_genes_PCA.png", plot = own_marker_genes_pca_fit_plot)
+ggsave(file = "Results/own_marker_genes_PCA.png", 
+       plot = own_marker_genes_pca_fit_plot,
+       width = 6.77, 
+       height = 2.83)
+
