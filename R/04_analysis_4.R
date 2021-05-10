@@ -137,8 +137,12 @@ markerPlot <- markerPlotOnly +
 # Write data --------------------------------------------------------------
 ggsave(file = "Results/heatmap_log2_fold_change_marker_genes.png", 
        plot = markerPlot, 
-       width = 26, height= 14, unit = "cm")
+       width = 26, 
+       height= 14, 
+       unit = "cm")
 
 ggsave(file = "Results/heatmap_log2_fold_change_random_and_marker_genes.png", 
        plot = gatheredPlot, 
-       width = 26, height= 14, unit = "cm")
+       width = 26, 
+       height= 14, 
+       unit = "cm")
