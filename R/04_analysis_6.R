@@ -13,8 +13,11 @@ source(file = "R/99_project_functions.R")
 
 
 # Load data ---------------------------------------------------------------
+
+#Load data for all genes
 borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_clean_aug_all_genes.tsv")
 
+#Load names of our own genes as vector
 own_marker_genes <- c(read_lines(file = "data/own_marker_genes.txt"))
 
 
