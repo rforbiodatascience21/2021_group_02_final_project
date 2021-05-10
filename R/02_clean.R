@@ -3,7 +3,7 @@ rm(list = ls())
 
 
 # Load libraries ----------------------------------------------------------
-library("tidyverse")
+library(tidyverse)
 
 
 # Define functions --------------------------------------------------------
@@ -14,9 +14,7 @@ source(file = "R/99_project_functions.R")
 borovecki_data <- read_tsv(file = "data/01_borovecki_data.tsv")
 
 
-
 # Wrangle data ------------------------------------------------------------
-
 
 # Transpose the tibble 
 borovecki_data_clean <- borovecki_data %>%
@@ -27,7 +25,7 @@ borovecki_data_clean <- borovecki_data %>%
   pivot_wider(id_cols = Patient, 
               names_from = ID_REF, 
               values_from = Values)
-  
+
 
 # Write data --------------------------------------------------------------
 write_tsv(x = borovecki_data_clean,

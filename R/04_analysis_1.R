@@ -5,8 +5,8 @@ rm(list = ls())
 
 
 # Load libraries ----------------------------------------------------------
-library("tidyverse")
-library("ggrepel")
+library(tidyverse)
+library(ggrepel)
 
 
 # Define functions --------------------------------------------------------
@@ -49,7 +49,7 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
 
 # Find the marker genes, using significant level >2.4, write the result to file
 own_marker_genes <- borovecki_data_per_gene %>%
-  top_n(12, 
+  top_n(n = 12, 
         wt = Log2_foldchange) %>%
   pull(Gene)
 
@@ -83,7 +83,8 @@ paper_log2_fold_change_plot <- log2_fold_change_plot(
 
 # Write data --------------------------------------------------------------
 
-write_lines(own_marker_genes, file = "data/own_marker_genes.txt")
+write_lines(x = own_marker_genes, 
+            file = "data/own_marker_genes.txt")
 
 ggsave(file = "Results/own_log2_fold_change.png", 
        plot = own_log2_fold_change_plot, 

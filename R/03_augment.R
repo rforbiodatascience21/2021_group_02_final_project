@@ -3,7 +3,7 @@ rm(list = ls())
 
 
 # Load libraries ----------------------------------------------------------
-library("tidyverse")
+library(tidyverse)
 
 
 # Define functions --------------------------------------------------------
@@ -21,30 +21,29 @@ borovecki_data_clean_aug_all_genes <- borovecki_data_clean %>%
   mutate(outcome = case_when(str_detect(Patient, "pre") ~ "pre_symptomatic",
                              str_detect(Patient, "control") ~ "control",
                              str_detect(Patient, "symp") ~ "symptomatic")) %>%
-  select(outcome, everything(), -"Patient")
-
+  select(outcome, 
+         everything(), 
+         -"Patient")
 
 # Subset the data, only include marker genes
 borovecki_data_clean_aug_marker_genes <- borovecki_data_clean_aug_all_genes  %>%
-  select("outcome", "201012_at", "202653_s_at", "208374_s_at", "200989_at", "212287_at", 
-         "218589_at", "217816_s_at", "213044_at", 
-         "201071_x_at", "213168_at", "201023_at", "217783_s_at")
-
-
+  select("outcome", "201012_at", "202653_s_at", "208374_s_at", "200989_at", 
+         "212287_at", "218589_at", "217816_s_at", "213044_at", "201071_x_at", 
+         "213168_at", "201023_at", "217783_s_at")
 
 # Make a list of 12 random genes 
 set.seed(22)
 random_genes <- borovecki_data_clean_aug_all_genes %>%
   select(-c(outcome, "201012_at", "202653_s_at", "208374_s_at", "200989_at",
-            "212287_at", "218589_at", "217816_s_at", "213044_at",
-            "201071_x_at", "213168_at", "201023_at", "217783_s_at")) %>%
+            "212287_at", "218589_at", "217816_s_at", "213044_at", "201071_x_at", 
+            "213168_at", "201023_at", "217783_s_at")) %>%
   sample(size = 12) %>%
   colnames()
   
-
 # Select the 12 random genes and outcome column from data
 borovecki_data_clean_aug_random_genes <- borovecki_data_clean_aug_all_genes %>%
-  select(c(outcome), random_genes) 
+  select(c(outcome), 
+         random_genes) 
   
 
 # Write data --------------------------------------------------------------
@@ -56,5 +55,3 @@ write_tsv(x = borovecki_data_clean_aug_marker_genes,
 
 write_tsv(x = borovecki_data_clean_aug_random_genes,
           file = "data/03_borovecki_data_clean_aug_random_genes.tsv")
-
-  
