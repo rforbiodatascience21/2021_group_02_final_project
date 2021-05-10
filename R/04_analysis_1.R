@@ -9,7 +9,6 @@ library("tidyverse")
 library("ggrepel")
 
 
-
 # Define functions --------------------------------------------------------
 source(file = "R/99_project_functions.R")
 
@@ -21,8 +20,8 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 # Wrangle data ------------------------------------------------------------
 
 # Transform tibble so each row is one gene and each column is a patient. Compute
-# The mean for each gene stratified on patient/control-status. Compute Log2 fold
-# change and significant level. 
+# the mean for each gene stratified on patient/control-status. Compute Log2 fold
+# change and significance level. 
 borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
   mutate(Patient = str_c("Patient_", row_number(), "_", outcome)) %>%
   select(Patient, 
@@ -40,7 +39,12 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
   mutate(Significant_level = case_when(Log2_foldchange >= 1.8 ~ "Significantly upregulated",
                                        Log2_foldchange <= -1 ~ "Significantly downregulated",
                                        TRUE ~ "Non-significant")) %>%
-  select(Gene, Patient_mean, Control_mean, Log2_foldchange, Significant_level, everything())
+  select(Gene, 
+         Patient_mean, 
+         Control_mean, 
+         Log2_foldchange, 
+         Significant_level, 
+         everything())
 
 
 # Find the marker genes, using significant level >2.4, write the result to file
