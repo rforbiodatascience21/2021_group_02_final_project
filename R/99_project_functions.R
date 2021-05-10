@@ -129,10 +129,14 @@ boxplot_func <- function(long_data){
 pca_plot <- function(data){
   return(pca_fit(data)  %>% 
            augment(data) %>% 
-           ggplot(aes(x = .fittedPC1, y = .fittedPC2, color = outcome)) + 
+           ggplot(aes(x = .fittedPC1, 
+                      y = .fittedPC2, 
+                      color = outcome)) + 
            geom_point(size = 1.5) +
            scale_color_manual(
-             values = c(symptomatic = "#D55E00", pre_symptomatic = "#00FF00", control = "#0072B2")
+             values = c(symptomatic = "#D55E00", 
+                        pre_symptomatic = "#00FF00", 
+                        control = "#0072B2")
            ) +
            theme_half_open(font_size = 12) + 
            background_grid()+
@@ -143,8 +147,10 @@ pca_plot <- function(data){
 variance_plot <- function(data){
   return(pca_fit(data) %>%
            tidy(matrix = "eigenvalues") %>%
-           ggplot(aes(PC, percent)) +
-           geom_col(fill = "#56B4E9", alpha = 0.8) +
+           ggplot(aes(PC, 
+                      percent)) +
+           geom_col(fill = "#56B4E9", 
+                    alpha = 0.8) +
            scale_x_continuous(breaks = 1:9) +
            scale_y_continuous(
              labels = scales::percent_format(),
