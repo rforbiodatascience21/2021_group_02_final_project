@@ -9,38 +9,55 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## First page
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
-
-## Introduction
+# Introduction
 
 - Bullet 1
 - Bullet 2
 - Bullet 3
 
-## Materials and method
+# Materials and method
 
 ```{r cars, echo = TRUE}
 summary(cars)
 ```
 
-## Results
+# Results
 
-```{r pca, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+## Log2 fold gene expression
+
+```{r log2_fold_change own genes, echo=FALSE, fig.cap="Marker genes found from our criteria", out.width = '100%'}
+knitr::include_graphics("../Results/own_log2_fold_change.png")
+```
+
+
+```{r log2_fold_change paper genes, echo=FALSE, fig.cap="Marker genes from the paper", out.width = '100%'}
+knitr::include_graphics("../Results/paper_log2_fold_change.png")
+```
+
+
+
+
+## PCA
+
+```{r pca, echo=FALSE, fig.cap="PCA", out.width = '80%'}
 knitr::include_graphics("../Results/pca_plots.png")
 ```
 
-
-## Plot 2
-
-```{r}
-plot(pressure)
+```{r pca, echo=FALSE, fig.cap="Variance Explained by components", out.width = '80%'}
+knitr::include_graphics("../Results/variance_explained_plots.png")
 ```
 
+## Distribution of gene expression
 
+```{r pca, echo=FALSE, fig.cap="Gene expression", out.width = '100%'}
+knitr::include_graphics("../Results/boxplot.png")
+```
+
+```{r pca, echo=FALSE, fig.cap="Gene expression", out.width = '100%'}
+knitr::include_graphics("../Results/boxplot.png")
+```
 
 ## Plot 3
 
