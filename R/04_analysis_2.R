@@ -118,9 +118,17 @@ variance_explained_plots <- (va + va2) / (vm + vm2) / (vo + vo2)
 
 # Write data --------------------------------------------------------------
 
-ggsave(file = "Results/pca_plots.png", plot = pca_plots)
+ggsave(file = "Results/pca_plots.png", 
+       plot = pca_plots, 
+       width = 20, 
+       height= 17, 
+       unit = "cm")
 
-ggsave(file = "Results/variance_explained_plots.png", plot = variance_explained_plots)
+ggsave(file = "Results/variance_explained_plots.png", 
+       plot = variance_explained_plots,
+       width = 20, 
+       height= 17, 
+       unit = "cm")
 
 
 

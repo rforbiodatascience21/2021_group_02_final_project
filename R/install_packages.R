@@ -1,3 +1,5 @@
 install.packages("tidyverse")
 install.packages("ggrepel")
 install.packages("cowplot")
+install.packages("devtools")
+devtools::install_github("tidymodels/broom")
