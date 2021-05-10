@@ -1,3 +1,5 @@
+# HEATMAP OF LOG 2 FOLD CHANGE FOR MARKER GENES AND RANDOM GENES
+
 # Clear workspace ---------------------------------------------------------
 rm(list = ls())
 
@@ -5,7 +7,7 @@ rm(list = ls())
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
 library(ggplot2)
-library(patch)
+library(patchwork)
 
 
 # Define functions --------------------------------------------------------
@@ -70,10 +72,10 @@ foldchange_random_genes <- random_genes_wide %>%
 
 # Doing log2 transformation
 foldchange_marker_genes_long <- foldchange_marker_genes %>% 
-  long_log2()
+  long_log2(.)
 
 foldchange_random_genes_long <- foldchange_random_genes %>%
-  long_log2()
+  long_log2(.)
 
 
 
