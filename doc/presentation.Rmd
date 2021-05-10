@@ -27,10 +27,10 @@ When you click the **Knit** button a document will be generated that includes bo
 summary(cars)
 ```
 
-## Plot 1
+## Results
 
-```{r}
-plot(pressure)
+```{r pca, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("../Results/pca_plots.png")
 ```
 
 
