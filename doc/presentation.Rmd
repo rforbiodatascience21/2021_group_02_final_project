@@ -2,7 +2,10 @@
 title: "Finding marker genes related to Huntingtons disease"
 author: Group 2 - Alex, Emilie, Asta and Julie
 date: May 11, 2021
-output: ioslides_presentation
+output: 
+  ioslides_presentation:
+  incremental: true
+
 ---
 
 ```{r setup, include=FALSE}
@@ -15,29 +18,35 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
+__Huntington's disease__:<br>
+- Leads to deteriorating nerve cells in the brain (As well as motoric, cognitive and psychiatric impairments)<br>
+- Inherited disease<br>
+- Currently has no cure<br>
+- Early diagnosis can help mitigate several problems (education of patient and family, some symptoms)
+
 # Materials and method
 
-## Data
+## Materials and method
+Borovecki F. _et al_, 2005 <br><br>
 
-## Methods
-
-
+Expression data from:<br>
+- 14 healthy controls<br>
+- 5 pre-symptomatic patients<br>
+- 12 symptomatic patients
 
 # Results
 
-## Log2 fold gene expression
+## Log2 fold change of gene expression
 
-```{r log2_fold_change own genes, echo=FALSE, fig.cap="Marker genes found from our criteria", out.width = '100%'}
+```{r log2_fold_change own genes, echo=FALSE, fig.cap="Own marker genes", out.width = '100%'}
 knitr::include_graphics("../Results/own_log2_fold_change.png")
 ```
 
-## Log2 fold gene expression 
+## Log2 fold change of gene expression 
 
 ```{r log2_fold_change paper genes, echo=FALSE, fig.cap="Marker genes from the paper", out.width = '100%'}
 knitr::include_graphics("../Results/paper_log2_fold_change.png")
 ```
-
-
 
 
 ## PCA
@@ -53,34 +62,34 @@ knitr::include_graphics("../Results/variance_explained_plots.png")
 
 ## Distribution of gene expression
 
-```{r boxplot, echo=FALSE, fig.cap="Boxplots of log2 transformed gene expression", out.width = '100%'}
+```{r boxplot, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/boxplots.png")
 ```
 
 
 ## Distribution of gene expression
 
-```{r ridgeline, echo=FALSE, fig.cap="Gene expression", out.width = '100%'}
+```{r ridgeline, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/ridgeline.png")
 ```
 
 ## Heatmap marker genes
 
-```{r heatmap_marker_genes, echo=FALSE, fig.cap="Marker genes", out.width = '100%'}
+```{r heatmap_marker_genes, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/heatmap_log2_fold_change_marker_genes.png")
 ```
 
 
-## Heatmap marker genes and random genes
+## Heatmap marker and random genes
 
-```{r heatmap_marker_genes_and_random, echo=FALSE, fig.cap="Marker genes and random genes", out.width = '100%'}
+```{r heatmap_marker_genes_and_random, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/heatmap_log2_fold_change_random_and_marker_genes.png")
 ```
 
 
 ## k-means
 
-```{r k-means, echo=FALSE, fig.cap="k-means", out.width = '100%'}
+```{r k-means, echo=FALSE, fig.cap="", out.width = '100%'}
 knitr::include_graphics("../Results/kmeans_plots.png")
 ```
 
@@ -88,6 +97,9 @@ knitr::include_graphics("../Results/kmeans_plots.png")
 # Discussion
 
 ## Discussion
-
+- 12 genes show upregulated expression
+- Pre-sympotimatic patients
+- Early diagnosis; Preparing patients and their families
+- Further research leading to treatment
 
 ## Questions?
