@@ -40,7 +40,10 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
 
 
 # Find the marker genes, using significant level >2.4, write the result to file
-own_marker_genes <- find_marker_genes(borovecki_data_per_gene, 2.4)
+
+# Find marker genes
+own_marker_genes <- find_marker_genes(data = borovecki_data_per_gene, 
+                                      number_of_wanted_marker_genes = 12)
 write_lines(own_marker_genes, file = "data/own_marker_genes.txt")
 
 # Define the marker genes used in the paper
