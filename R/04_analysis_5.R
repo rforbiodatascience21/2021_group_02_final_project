@@ -37,15 +37,20 @@ pca_fit_all_genes_data <- pca_fit(borovecki_data_clean_aug_all_genes)
 
 #Plot kmeans clustering for marker genes
 kmeans_marker_genes_plot <- kmeans_plot(pca_fit_marker_genes_data, kmeans_marker_genes_data) + 
-  ggtitle("Marker genes", subtitle = "K-means clustering")
+  ggtitle("Marker genes", 
+          subtitle = "K-means clustering")
 
 #Plot kmeans clustering for all genes
 kmeans_all_genes_plot <- kmeans_plot(pca_fit_marker_genes_data, kmeans_marker_genes_data) + 
-  ggtitle("All genes", subtitle = "K-means clustering")
+  ggtitle("All genes", 
+          subtitle = "K-means clustering")
 
 kmeans_plots <- kmeans_marker_genes_plot + kmeans_all_genes_plot +
   plot_layout(guides = "collect")
 
 
 # Write data --------------------------------------------------------------
-ggsave(file = "Results/kmeans_plots.png", plot = kmeans_plots)
+ggsave(file = "Results/kmeans_plots.png", 
+       plot = kmeans_plots,
+       width = 6.77, 
+       height = 2.83)

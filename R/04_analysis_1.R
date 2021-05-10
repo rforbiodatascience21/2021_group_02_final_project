@@ -49,7 +49,6 @@ own_marker_genes <- borovecki_data_per_gene %>%
         wt = Log2_foldchange) %>%
   pull(Gene)
 
-write_tsv(own_marker_genes, file = "data/own_marker_genes.tsv")
 
 # Define the marker genes used in the paper
 paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
@@ -80,11 +79,15 @@ paper_log2_fold_change_plot <- log2_fold_change_plot(
 
 
 # Write data --------------------------------------------------------------
+
+write_lines(own_marker_genes, file = "data/own_marker_genes.txt")
+
 ggsave(file = "Results/own_log2_fold_change.png", 
        plot = own_log2_fold_change_plot, 
        width = 25, 
        height= 14, 
        unit = "cm")
+
 ggsave(file = "Results/paper_log2_fold_change.png", 
        plot = paper_log2_fold_change_plot, 
        width = 22, 

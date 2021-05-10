@@ -60,7 +60,8 @@ log2_marker_genes_boxplot <- borovecki_data_clean_aug_marker_genes %>%
   long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
-  ggtitle("Marker genes", subtitle = "Distribution of mRNA expression") +
+  ggtitle("Marker genes", 
+          subtitle = "Distribution of mRNA expression") +
   ylab("log2(mRNA expression)")
 
 #Boxplot log2 transformed - all genes
@@ -68,7 +69,8 @@ log2_all_genes_boxplot <- borovecki_data_clean_aug_all_genes %>%
   long_log2() %>%
   boxplot_func() +
   ylim(-5, 17) +
-  ggtitle("All genes", subtitle = "Distribution of mRNA expression") +
+  ggtitle("All genes", 
+          subtitle = "Distribution of mRNA expression") +
   ylab("log2(mRNA expression)")
 
 log2_boxplots <- log2_marker_genes_boxplot + log2_all_genes_boxplot
@@ -76,7 +78,7 @@ log2_boxplots <- log2_marker_genes_boxplot + log2_all_genes_boxplot
   
 
 #RIDGELINE----------------
-#Ridgline for both marker genes and random genes
+#Ridgeline for both marker genes and random genes
 ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
   mutate(expression = log2(expression)) %>%
   ggplot(mapping = aes(x = expression, 
@@ -87,7 +89,9 @@ ridgeline_random_comparison_plot <- marker_and_random_data_long %>%
   theme_ridges() + 
   theme(legend.position = "none", 
         axis.title.y = element_blank()) +
-  scale_y_discrete(limit = c("symptomatic", "pre_symptomatic", "control")) +
+  scale_y_discrete(limit = c("symptomatic", 
+                             "pre_symptomatic", 
+                             "control")) +
   labs(x = "log2(mRNA expression)") +
   facet_wrap(~ type)
 

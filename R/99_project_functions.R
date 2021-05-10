@@ -10,7 +10,7 @@ long_log2 <- function(data){
 }
 
 
-
+#Find mean of control patient values
 find_control_means <- function(data){
   return(data %>%
            filter(str_detect(outcome, "control")) %>% 
@@ -102,9 +102,9 @@ kmeans_plot <- function(pca_fit_data, kmeans_data){
                                 y = .fittedPC2, 
                                 colour = .cluster, 
                                 shape = outcome)) +
-           geom_point(size = 2) +
+           geom_point(size = 2, alpha = 0.7) +
            scale_colour_viridis(discrete = TRUE) +
-           theme_half_open(12) + 
+           theme_half_open() + 
            background_grid() +
            labs(x = "PC1", 
                 y = "PC2",
@@ -125,24 +125,32 @@ boxplot_func <- function(long_data){
            xlab("Outcome"))
 }
 
+#PCA plot
 pca_plot <- function(data){
   return(pca_fit(data)  %>% 
            augment(data) %>% 
-           ggplot(aes(x = .fittedPC1, y = .fittedPC2, color = outcome)) + 
+           ggplot(aes(x = .fittedPC1, 
+                      y = .fittedPC2, 
+                      color = outcome)) + 
            geom_point(size = 1.5) +
            scale_color_manual(
-             values = c(symptomatic = "#D55E00", pre_symptomatic = "#00FF00", control = "#0072B2")
+             values = c(symptomatic = "#D55E00", 
+                        pre_symptomatic = "#00FF00", 
+                        control = "#0072B2")
            ) +
            theme_half_open(font_size = 12) + 
            background_grid()+
            xlab("PC1") + ylab("PC2"))
 }
 
+#Variance explained plot
 variance_plot <- function(data){
   return(pca_fit(data) %>%
            tidy(matrix = "eigenvalues") %>%
-           ggplot(aes(PC, percent)) +
-           geom_col(fill = "#56B4E9", alpha = 0.8) +
+           ggplot(aes(PC, 
+                      percent)) +
+           geom_col(fill = "#56B4E9", 
+                    alpha = 0.8) +
            scale_x_continuous(breaks = 1:9) +
            scale_y_continuous(
              labels = scales::percent_format(),
