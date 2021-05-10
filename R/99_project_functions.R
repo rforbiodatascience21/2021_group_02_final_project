@@ -125,6 +125,7 @@ boxplot_func <- function(long_data){
            xlab("Outcome"))
 }
 
+#PCA plot
 pca_plot <- function(data){
   return(pca_fit(data)  %>% 
            augment(data) %>% 
@@ -138,6 +139,7 @@ pca_plot <- function(data){
            xlab("PC1") + ylab("PC2"))
 }
 
+#Variance explained plot
 variance_plot <- function(data){
   return(pca_fit(data) %>%
            tidy(matrix = "eigenvalues") %>%
