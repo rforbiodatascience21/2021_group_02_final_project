@@ -25,7 +25,9 @@ borovecki_data_clean_aug_all_genes <- read_tsv(file = "data/03_borovecki_data_cl
 # change and significant level. 
 borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
   mutate(Patient = str_c("Patient_", row_number(), "_", outcome)) %>%
-  select(Patient, everything(), -outcome) %>%
+  select(Patient, 
+         everything(), 
+         -outcome) %>%
   pivot_longer(cols = -Patient, 
                names_to = "Gene", 
                values_to = "Value") %>%
@@ -43,10 +45,11 @@ borovecki_data_per_gene <- borovecki_data_clean_aug_all_genes %>%
 
 # Find the marker genes, using significant level >2.4, write the result to file
 own_marker_genes <- borovecki_data_per_gene %>%
-  top_n(12, wt = Log2_foldchange) %>%
+  top_n(12, 
+        wt = Log2_foldchange) %>%
   pull(Gene)
 
-write_lines(own_marker_genes, file = "data/own_marker_genes.txt")
+write_tsv(own_marker_genes, file = "data/own_marker_genes.tsv")
 
 # Define the marker genes used in the paper
 paper_marker_genes <- c("201012_at", "202653_s_at", "208374_s_at", "200989_at", 
