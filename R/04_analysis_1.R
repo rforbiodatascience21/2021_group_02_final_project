@@ -1,3 +1,5 @@
+# LOG 2 FOLD CHANGE PLOT FOR SELECTING MARKER GENES
+
 # Clear workspace ---------------------------------------------------------
 rm(list = ls())
 
