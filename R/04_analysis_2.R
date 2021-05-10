@@ -33,13 +33,12 @@ borovecki_data_clean_aug_marker_genes_log2 <-  borovecki_data_clean_aug_marker_g
 borovecki_data_clean_aug_all_genes_log2 <-  borovecki_data_clean_aug_all_genes %>%
   mutate_if(is.numeric, log2)
 
-# Model data
+
 
 
 # Visualise data ----------------------------------------------------------
 
 # Plot PCA
-
 
 
 pm <- pca_plot(borovecki_data_clean_aug_marker_genes) + 
@@ -60,9 +59,6 @@ pca_plots <- (pm + pa) / (pm2 + pa2) +
 
 # Plot Variance explained by each principal component
 
-
-
-
 vm <- variance_plot(borovecki_data_clean_aug_marker_genes) + 
   ggtitle("Variance Explained - Marker Genes") + 
   theme(plot.title = element_text(size = 10, face = "bold"))
@@ -76,8 +72,8 @@ vm2 <- variance_plot(borovecki_data_clean_aug_marker_genes_log2) +
   ggtitle("Variance Explained - Marker Genes - log2") + 
   theme(plot.title = element_text(size = 10, face = "bold"))
 
-va2 <- variance_plot(borovecki_data_clean_aug_all_genes_log2) + 
-  ggtitle("Variance Explained - All Genes - log2") + 
+va2 <- variance_plot(borovecki_data_clean_aug_all_genes_log2) +
+  ggtitle("Variance Explained - All Genes - log2") +
   theme(plot.title = element_text(size = 10, face = "bold"))
 
 variance_explained_plots <- (vm + va) / (vm2 + va2) 
